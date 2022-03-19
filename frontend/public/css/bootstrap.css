@@ -5155,6 +5155,7 @@ textarea.form-control-lg {
 
 .toast {
   width: 350px;
+  flex-basis: auto;
   max-width: 100%;
   font-size: 0.875rem;
   pointer-events: auto;

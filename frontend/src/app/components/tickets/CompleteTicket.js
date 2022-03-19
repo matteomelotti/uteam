@@ -16,7 +16,7 @@ const CompleteTicket = ({ ticketId }) => {
       setNotifications([...notifications, {
         title: 'Successfully completed',
         body: 'The ticket was completed successfully',
-        autohide: 5000,
+        // autohide: 5000,
         color: 'success'
       }])
     }

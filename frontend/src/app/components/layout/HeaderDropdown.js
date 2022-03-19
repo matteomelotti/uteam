@@ -11,21 +11,20 @@ import CIcon from '@coreui/icons-react'
 // } from '../state'
 import { useQueryClient } from 'react-query'
 // import translate from '../i18n/translate';
+import { Logout } from 'api/mutations'
 
-const tPath = `containers.theHeaderDropdown`;
+// const tPath = `containers.theHeaderDropdown`;
 
 const TheHeaderDropdown = () => {
   const queryClient = useQueryClient()
 
   const logOut = () => {
     // localStorage.removeItem('token')
-
     queryClient.removeQueries()
-
-    const redirectTo = `${process.env.REACT_APP_API_URL}/auth/logout`
-
-    window.location.href = redirectTo;
-  } 
+    Logout()
+    window.location.href = '/auth/login'
+    // const redirectTo = `${process.env.REACT_APP_API_PATH}/auth/logout`
+  }
 
   return (
     <CDropdown

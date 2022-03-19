@@ -65,12 +65,12 @@ const TicketEditor = ({ ticket, ticketState, setTicketState }) => {
     if (ticketEditorOpen) {
       return (
         <Form id='new-ticket-form' name='new-ticket-form' data-name='New Ticket Form' className='todo-form' onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup className='todo-add mb-3'>
-            <Col xs={12} className='p-0'>
-              <input type='text' name='title' aria-describedby='titleHelp' placeholder='Title' maxLength='256' data-name='Title' id='ticket-title' {...register('title', { required: true })} />
-              <small id='titleHelp' className='form-text error'>{errors.title?.message}</small>
-            </Col>
-          </FormGroup>
+          <Form.Group className='mb-3' controlId='formBasicEmail'> {/* todo-add */}
+            {/* <Form.Label>Ticket title</Form.Label> */}
+            <Form.Control type='text' placeholder='Ticket title' name='title' aria-describedby='titleHelp' maxLength='256' data-name='Title' id='ticket-title' {...register('title', { required: true })} />
+            <Form.Text className='form-text error'>{errors.title?.message}</Form.Text>
+          </Form.Group>
+
           <Button
             type='submit'
             className='btn green w-200 mr-1'

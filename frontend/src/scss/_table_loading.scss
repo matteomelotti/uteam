@@ -1,0 +1,43 @@
+@keyframes moving-gradient {
+  0% { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
+}
+
+.table-loading-container {
+  height: 120px;
+  position: relative;
+  .an-row {
+    height: 40px;
+  }
+}
+.animate-item {
+  border-radius: 16px;
+}
+.animate {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #eee 20%, #ddd 50%, #eee 80%);
+  background-size: 500px 100px;
+  animation-name: moving-gradient;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.animateBg {
+  position: absolute;
+  opacity: .2;
+  border-radius: 12px;
+  box-shadow: 0 0 4px rgb(153, 153, 153);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  background: rgb(255,255,255);
+  background: linear-gradient(350deg, white 0%, white 40%, rgba(220, 220, 220, 0.827066) 50%, white 60%, white 100%);    
+  background-size: 1000px 100%;
+  animation-name: moving-gradient;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}

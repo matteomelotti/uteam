@@ -1,0 +1,364 @@
+// Here you can add other styles
+
+select.form-control{
+  &.is-valid, &.is-invalid {
+    background-position: right calc(0.375em + 1.1875rem) center !important;
+    padding-right: calc(1.5em + 1.3rem) !important;
+  }
+}
+
+.tablesActionButton {
+  white-space: nowrap;
+  width: 100%;
+  min-width: fit-content;
+}
+
+.loadingModal {
+  .modal-content {
+    background-color: rgba($color: #000000, $alpha: 0);
+    box-shadow: none !important;
+  }
+}
+
+.custom-spinner {
+  width: 3em;
+  height: 3em;
+}
+
+.text-start {
+  text-align: start;
+}
+
+.loading {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99999999;
+  background-color: rgba($color: #000000, $alpha: .3);
+  top: 0;
+  left: 0;
+}
+
+.ttc {
+  text-transform: capitalize;
+}
+
+.table-obsoleted {
+  background-color: rgba($color: #9c3c3c, $alpha: .2) !important;
+  transition: .2s ease;
+  &:hover {
+    background-color: rgba($color: #9c3c3c, $alpha: .3) !important;
+    transition: .2s ease;
+  }
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.extraPriceLists {
+  li {
+    padding: 6px 10px;
+  }
+}
+
+* {
+  &::-webkit-scrollbar-track-piece { background-color: #E3E3E3; border-radius: 5px;}
+  &::-webkit-scrollbar-thumb { background-color: #C1C1C1; border-radius: 3px;}
+  &::-webkit-scrollbar { width: 14px; height: 14px;}
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.choosePriceList {
+  margin: 0;
+  tr {
+    th {
+      border-top: none; 
+    }
+  }
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.error-cont {
+  .error-title {
+    .border-bottom {
+      border-bottom-color: red !important;
+    }
+    .arrow {
+      color: red;
+      animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+  }
+  .choosePriceList {
+    tr {
+      th {
+        border-bottom: 2px solid red;
+      }
+      td {
+        border-top: 1px solid red !important;
+        border-bottom: 1px solid red !important;
+      }
+    }
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.line-height-1 {
+  line-height: 1;
+}
+
+.notify-link {
+  color: white;
+
+  &:hover {
+    color: rgb(221, 221, 221);
+  }
+
+  td.with-euro::after {
+    content: ' €'
+  }
+
+  .bg-blond {
+    background-color: #F4F7FA;
+  }
+}
+
+table {
+  th, td {
+    vertical-align: baseline !important;
+  }
+}
+td.with-euro::after {
+  content: ' €'
+}
+
+.bg-blond {
+  background-color: #F4F7FA;
+}
+
+.striped-row{
+  background-color: rgba(0, 0, 21, 0.05);
+}
+
+.previewTable {
+  td {
+    vertical-align: middle !important;
+  }
+}
+
+.previewContainer {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    .previewItemEffect {
+      left: 40%;
+      transform: scale(1.5) rotate(360deg);
+      transition: .3s ease;
+      &::after {
+        opacity: 1;
+        transition: 1s ease;
+      }
+    }
+  }
+  .previewItem {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    box-shadow: 0 0 3px #ccc;
+    background: rgb(240, 240, 240);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s ease;
+    position: absolute;
+    left: 0;
+    padding: 4px;
+  }
+  .previewItemEffect {
+    &::after {
+      content: "preview";
+      position: absolute;
+      opacity: 0;
+      font-weight: bold;
+      font-size: 10px;
+      bottom: 0;
+    }
+    &:active {
+      left: 40%;
+      transform: scale(.9);
+      transition: .3s ease;
+    }
+  }
+}
+
+.previewImage {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.loadImgCard {
+  width: 150px;
+  .card-body {
+    height: 150px;
+  }
+  .card-footer {
+    height: 50px;
+  }
+}
+
+.setAsDefaultBtn {
+  opacity: .6;
+  transition: .2s ease;
+  &:hover {
+    opacity: 1;
+    transition: .2s ease;
+  }
+}
+
+.waterText {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1.1em;
+}
+
+.obsoleted-text {
+  color: var(--danger)
+}
+
+.poIcon {
+  width: 24px;
+  &.poSuccess {
+    color: #2eb85c;
+  }
+  &.poInfo {
+    color: #39f;
+  }
+  &.poObsoleted {
+    width: 28;
+    color: var(--warning);
+  }
+}
+
+.load-preview {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.interested {
+  min-width: 100px;
+  max-height: 100px;
+}
+.mdImagePreview {
+  &::-webkit-scrollbar { width: 6px; height: 6px;}
+  height: 25vh;
+  min-height: 200px;
+  width: 100px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  resize: vertical;
+  transition: .4s ease width;
+  &:hover, &:active, &:focus-within {
+    width: 300px;
+    transition: .4s ease width;
+    .mdContainer {
+      top: 0;
+      transition: .4s ease;
+    }
+    .loadImagesIcon {
+      .iconLoad {
+        width: 100%;
+        transition: .4s ease width;
+        width: 100%;
+      }
+    }
+  }
+  .mdContainer {
+    z-index: 100;
+    position: absolute;
+    transition: .4s ease;
+    top: -62px;
+    width: 300px;
+    .mdContent {
+      cursor: pointer;
+      transition: .4s ease;
+      &:hover {
+        background: #d8d8d8;
+        transition: .4s ease;
+      }
+      .imagePreviewText {
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .previewItemEffect {
+        &:hover {
+          left: auto;
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+  .loadImagesIcon {
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px 0px !important;
+    align-items: center;
+    transition: .4s ease !important;
+    &:hover {
+      background: none !important;
+      cursor: auto !important;
+    }
+    .iconLoad {
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: .4s ease width;
+    }
+    .everithingIsLoaded {
+      margin: 0;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+}
+.rangePriceListRow {
+  padding: 10px;
+  border: 1px solid hsl(0, 0%, 80%);;
+  border-radius: 5px;
+  margin: 15px;
+}

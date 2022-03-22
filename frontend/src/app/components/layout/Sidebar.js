@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   CCreateElement,
   CSidebar,
@@ -6,31 +7,25 @@ import {
   CSidebarNav,
   CSidebarNavDivider,
   CSidebarNavTitle,
-  CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem
 } from '@coreui/react'
 
-// import { getNav } from './_nav'
+import { getNav } from './nav'
 import {
-  // user as _user,
+  user as _user,
   sidebarShow as _sidebarShow
 } from '../../../state'
 
 import { useRecoilState, useRecoilValue } from 'recoil'
-// import { useIntl } from 'react-intl'
-// import translate from '../i18n/translate'
-
-// const tPath = `containers.theSidebar`;
 
 const Sidebar = () => {
+  const { t } = useTranslation()
   const [show, setShow] = useRecoilState(_sidebarShow)
-  // const user = useRecoilValue(_user)
-  // const intl = useIntl();
-
-  // const navigation = getNav('it').filter((nav) => (
-  //   (nav.allowRoles == null) || (nav.allowRoles?.includes('admin'))
-  // )).map(({ allowRoles, ...nav }) => nav)
+  const user = useRecoilValue(_user)
+  const navigation = getNav('it').filter((nav) => (
+    (nav.allowRoles == null) || (nav.allowRoles?.includes(user?.role))
+  )).map(({ allowRoles, ...nav }) => nav)
 
   return (
     <CSidebar
@@ -40,23 +35,21 @@ const Sidebar = () => {
     >
       <CSidebarBrand className='d-md-down-none' to='/'>
         <p className='h2'>
-          UTeam
-          {/* { translate(`${tPath}.title`) } */}
+          {t('sideBar.title')}
         </p>
       </CSidebarBrand>
       <CSidebarNav>
-        {/* <CCreateElement
-          items={[]}
+        <CCreateElement
+          items={navigation}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,
             CSidebarNavItem,
             CSidebarNavTitle
           }}
-        /> */}
+        />
         <CSidebarNavDivider />
       </CSidebarNav>
-      {/* <CSidebarMinimizer className='c-d-md-down-none' /> */}
     </CSidebar>
   )
 }

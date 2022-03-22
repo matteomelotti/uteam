@@ -1,4 +1,13 @@
 const it = {
+  sideBar: {
+    title: 'UTeam',
+    menu: {
+      admin: {
+        title: 'Menu Admin',
+        users: 'Utenti'
+      }
+    }
+  },
   loginPage: {
     access: 'Accedi',
     register: 'Registrati',

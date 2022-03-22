@@ -1,4 +1,13 @@
 const en = {
+  sideBar: {
+    title: 'UTeam',
+    menu: {
+      admin: {
+        title: 'Admin Menu',
+        users: 'Users'
+      }
+    }
+  },
   loginPage: {
     access: 'Access',
     register: 'Register',

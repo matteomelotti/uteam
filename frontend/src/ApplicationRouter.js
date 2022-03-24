@@ -13,7 +13,7 @@ import RegisterPage from 'app/pages/auth/RegisterPage'
 import ActivateAccountPage from 'app/pages/auth/ActivateAccountPage'
 import DashboardPage from 'app/pages/dashboard/DashboardPage'
 import IndexPage from 'app/pages/public/IndexPage'
-import EditUserPage from 'app/pages/user/EditUserPage'
+import EditUserPage from 'app/pages/users/EditUserPage'
 
 import Storage from 'libs/storage'
 import { JWT_TOKEN } from 'config'
@@ -23,6 +23,7 @@ import { parseJwt } from './helpers/parseJwt'
 
 // import PrivateLayout from 'app/components/layout/PrivateLayout'
 const PrivateLayout = lazy(async () => await import('app/components/layout/PrivateLayout'))
+const Users = lazy(async () => await import('app/pages/users'))
 
 const Private = withCurrentUser(PrivateRoute)
 const OnlyPublic = withCurrentUser(OnlyPublicRoute)
@@ -56,6 +57,7 @@ const ApplicationRouter = () => {
       <OnlyPublic exact path='/auth/activate/:email' component={ActivateAccountPage} layout={AuthLayout} />
       <OnlyPublic exact path='/auth/register' component={RegisterPage} layout={AuthLayout} />
       <Private exact path='/dashboard' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={DashboardPage} />
+      <Private exact path='/users' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={Users} />
       <Private exact path='/user/edit' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={EditUserPage} />
     </Switch>
   )

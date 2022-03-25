@@ -6,6 +6,10 @@ import ROLE from './role.model.js'
 
 export default express
   .Router()
+  .get('/', [
+    wrap(authorizeRequest([ROLE.ADMIN])),
+    wrap(userController.index)
+  ])
   .get('/me', wrap(userController.me))
   .put('/me', wrap(userController.updateMe))
   .put('/me/change-password', wrap(userController.changeMyPassword))

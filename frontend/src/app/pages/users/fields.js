@@ -1,8 +1,8 @@
 export const fields = ([
-  {
-    key: 'name',
-    label: 'Name'
-  },
+  // {
+  //   key: 'name',
+  //   label: 'Name'
+  // },
   {
     key: 'email',
     label: 'Email'
@@ -10,6 +10,10 @@ export const fields = ([
   {
     key: 'role',
     label: 'Role'
+  },
+  {
+    key: 'active',
+    label: 'Active'
   },
   {
     key: 'editUser',

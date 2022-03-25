@@ -2,6 +2,10 @@ import { CButton, CCard, CCardBody, CCardHeader, CCol, CDataTable, CRow } from '
 import { useState } from 'react'
 import TableLoading from 'app/components/common/TableLoading'
 import { fields } from './fields'
+import { useQuery } from 'react-query'
+import Loader from 'app/components/Loader'
+import { UsersListQuery } from 'api/queries'
+import TableActionButtons from './shared/tableActionButtons'
 
 const Users = () => {
   const [create, setCreate] = useState(false)
@@ -11,9 +15,19 @@ const Users = () => {
     asc: 'true'
   })
 
-  // TODO: get users from database
-  const data = null
-  const users = data?.items.map((item, idx) => ({
+  const { isLoading, isError, error, data } = useQuery('UsersList', UsersListQuery, {
+    retry: false
+  })
+
+  if (isLoading) {
+    return <Loader />
+  }
+
+  if (error) {
+    return <p>error</p>
+  }
+
+  const users = data?.data?.map((item, idx) => ({
     ...item,
     _classes: [
       !item.active && 'table-obsoleted',
@@ -21,10 +35,7 @@ const Users = () => {
     ]
   }))
 
-  const isFetching = false
-  const isError = false
-  const isLoading = false
-  const error = null
+  const page = 1
 
   return (
     <CRow>
@@ -47,7 +58,7 @@ const Users = () => {
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              loading={isFetching}
+              loading={isLoading}
               items={users}
               striped
               fields={fields}
@@ -62,10 +73,10 @@ const Users = () => {
               onPaginationChange={(val) => setLimit(val)}
               scopedSlots={{
                 editUser: (user) => (
-                  <p>TODO: edit button</p>
+                  <TableActionButtons.EditUserBtn page={page} limit={limit} user={user} />
                 ),
                 activateUser: (user) => (
-                  <p>TODO: activate user</p>
+                  <TableActionButtons.ActivateUserBtn page={page} limit={limit} user={user} />
                 )
               }}
             />

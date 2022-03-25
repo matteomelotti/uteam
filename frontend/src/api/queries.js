@@ -10,7 +10,13 @@ const TicketsListQuery = async () => {
   return result
 }
 
+const UsersListQuery = async () => {
+  const result = await Axios.authenticated().get('/users')
+  return result
+}
+
 export {
   Me,
-  TicketsListQuery
+  TicketsListQuery,
+  UsersListQuery
 }

@@ -4,6 +4,11 @@ import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
 
 class Controller {
+  async index (req, res) {
+    const users = await UserService.findAll()
+    return res.json(users)
+  }
+
   async byId (req, res) {
     const user = await UserService.byId(req.params.id)
     if (user) res.json(user)

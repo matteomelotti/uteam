@@ -2,7 +2,14 @@ import CIcon from '@coreui/icons-react'
 import { ALLOWED_ROLES } from '../../permissions/roles'
 import TranslateMessage from '../../i18n/translateMessage'
 
-const menu = []
+const menu = [
+  {
+    _tag: 'CSidebarNavItem',
+    name: <TranslateMessage message='sideBar.menu.admin.home' />,
+    to: '/dashboard',
+    icon: <CIcon name='cil-home' customClasses='c-sidebar-nav-icon' />
+  }
+]
 
 const forAdmin = [
   {

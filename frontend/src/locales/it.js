@@ -3,6 +3,7 @@ const it = {
     title: 'UTeam',
     menu: {
       admin: {
+        home: 'Home',
         title: 'Menu Admin',
         users: 'Utenti'
       }

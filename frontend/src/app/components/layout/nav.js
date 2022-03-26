@@ -13,10 +13,6 @@ const menu = [
 
 const forAdmin = [
   {
-    _tag: 'CSidebarNavTitle',
-    _children: [{ id: 'sideBar.menu.admin.title' }]
-  },
-  {
     _tag: 'CSidebarNavItem',
     name: <TranslateMessage message='sideBar.menu.admin.users' />,
     to: '/users',

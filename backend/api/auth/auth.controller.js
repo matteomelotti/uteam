@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 class Controller {
   async signup (req, res, next) {
-    const userData = _.pick(req.body, ['email', 'password'])
+    const userData = _.pick(req.body, ['email', 'password', 'firstName', 'lastName'])
     userData.language = req.body.language || process.env.DEFAULT_LOCALE
     const userErrors = await UserValidator.onSignup(userData)
     if (userErrors) {
@@ -23,7 +23,7 @@ class Controller {
   }
 
   async manualSignup (req, res, next) {
-    const userData = _.pick(req.body, ['email', 'password'])
+    const userData = _.pick(req.body, ['email', 'password', 'firstName', 'lastName'])
     userData.active = true
 
     return res.json({

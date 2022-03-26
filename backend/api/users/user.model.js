@@ -1,8 +1,8 @@
 import localDatabase from '../../common/localDatabase.js'
 
 const schema = new localDatabase.Schema({
-  name: String,
-  surname: String,
+  firstName: String,
+  lastName: String,
   email: String,
   language: String,
   password: String,

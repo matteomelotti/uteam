@@ -22,6 +22,8 @@ class UserValidator {
   async onSignup (obj) {
     const emailExists = await UserService.oneBy({ email: obj.email })
     const schemaKeys = {
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
       password: Joi.string().min(8).required(),
       language: Joi.string()
     }
@@ -80,8 +82,8 @@ class UserValidator {
 
   async onUpdate (obj) {
     const schemaKeys = {
-      name: Joi.string(),
-      surname: Joi.string(),
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
       role: Joi.string(),
       active: Joi.boolean()
     }
@@ -92,8 +94,8 @@ class UserValidator {
 
   async onUpdateMe (obj) {
     const schemaKeys = {
-      name: Joi.string(),
-      surname: Joi.string(),
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
       language: Joi.string()
     }
     const schema = Joi.object().keys(schemaKeys)
@@ -104,8 +106,8 @@ class UserValidator {
   async onCreate (obj) {
     const emailExists = await UserService.oneBy({ email: obj.email })
     const schemaKeys = {
-      name: Joi.string(),
-      surname: Joi.string(),
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
       language: Joi.string(),
       role: Joi.string(),
       password: Joi.string(),

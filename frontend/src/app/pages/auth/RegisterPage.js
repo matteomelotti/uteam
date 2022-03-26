@@ -16,6 +16,8 @@ const RegisterPage = (props) => {
   const { t } = useTranslation()
 
   const schema = yup.object().shape({
+    firstName: yup.string().required(),
+    lastName: yup.string().required(),
     email: yup.string().lowercase().email().required(),
     password: yup.string().min(8).required(),
     privacyAccepted: yup.boolean()
@@ -57,6 +59,14 @@ const RegisterPage = (props) => {
     <div>
       <h3 className='m-20 m-b-30'>{t('registerPage.register')}</h3>
       <Form id='email-form' name='email-form' data-name='Email Form' className='form' onSubmit={handleSubmit(onSubmit)}>
+        <FormGroup>
+          <input type='text' className='form-control custom-input' maxLength='256' aria-describedby='firstNameHelp' name='firstName' data-name='firstName' placeholder='Firstname' id='firstName' {...register('firstName', { required: true })} />
+          <small id='firstNameHelp' className='form-text error'>{errors.firstName?.message}</small>
+        </FormGroup>
+        <FormGroup>
+          <input type='text' className='form-control custom-input' maxLength='256' aria-describedby='lastNameHelp' name='lastName' data-name='lastName' placeholder='LastName' id='lastName' {...register('lastName', { required: true })} />
+          <small id='lastNameHelp' className='form-text error'>{errors.lastName?.message}</small>
+        </FormGroup>
         <FormGroup>
           <input type='email' className='form-control custom-input' maxLength='256' aria-describedby='emailHelp' name='email' data-name='Email' placeholder='Email' id='email' {...register('email', { required: true })} />
           <small id='emailHelp' className='form-text error'>{errors.email?.message}</small>

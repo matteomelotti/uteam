@@ -73,6 +73,11 @@ const TicketComplete = async (id) => {
   return result
 }
 
+const UserCreate = async (data) => {
+  const result = await Axios.authenticated().post('/users', data)
+  return result
+}
+
 export {
   Logout,
   Login,
@@ -86,5 +91,6 @@ export {
   TicketCreate,
   TicketEdit,
   TicketDelete,
-  TicketComplete
+  TicketComplete,
+  UserCreate
 }

@@ -6,6 +6,7 @@ import { useQuery } from 'react-query'
 import Loader from 'app/components/Loader'
 import { UsersListQuery } from 'api/queries'
 import TableActionButtons from './shared/tableActionButtons'
+import CreateUserModal from './shared/modals/createUserModal'
 
 const Users = () => {
   const [create, setCreate] = useState(false)
@@ -15,7 +16,7 @@ const Users = () => {
     asc: 'true'
   })
 
-  const { isLoading, isError, error, data } = useQuery('UsersList', UsersListQuery, {
+  const { isLoading, isError, error, data } = useQuery('users', UsersListQuery, {
     retry: false
   })
 
@@ -85,7 +86,12 @@ const Users = () => {
       </CCol>
 
       {create
-        ? <p> TODO: create user </p>
+        ? (<CreateUserModal
+            show={!!create}
+            setShow={setCreate}
+            page={page}
+            limit={limit}
+           />)
         : ''}
     </CRow>
   )

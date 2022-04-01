@@ -8,22 +8,22 @@ import { UserCreate } from 'api/mutations'
 import { useRecoilState } from 'recoil'
 import { notifications as _notifications } from '../../../../../state'
 
-const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage, serviceCode }) => {
+const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
   const queryClient = useQueryClient()
   const [notifications, setNotifications] = useRecoilState(_notifications)
   const schema = yup.object().shape({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    email: yup.string().required()
+    email: yup.string().required(),
+    password: yup.string().required()
   })
 
   const {
-    handleSubmit, control,
+    handleSubmit, control, register,
     formState: { errors, touchedFields }
   } = useForm({
     mode: 'all',
-    defaultValues: {
-    },
+    reValidateMode: 'onSubmit',
     resolver: yupResolver(schema)
   })
 
@@ -80,27 +80,33 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage, serviceC
             <CRow>
               <CCol xs>
                 <CFormGroup>
-                  <CLabel htmlFor='firstName'>First Name</CLabel>
+                  <CLabel htmlFor='firstName'>First Name*</CLabel>
                   <Controller
                     name='firstName'
                     control={control}
                     defaultValue=''
-                    render={({ field: { ref, ...field } }) =>
-                      <CInput
-                        {...field}
-                        id='firstName'
-                        valid={touchedFields.firstName && (errors.firstName == null)}
-                        invalid={touchedFields.firstName && !!errors.firstName?.message}
-                        name='firstName'
-                      />}
+                    render={({ field: { ref, value, name, ...field }, fieldState: { invalid, isTouched, isDirty, error }, formState: { errors } }) =>
+                      <>
+                        <input {...register("firstName")} />
+                        <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback>
+                        {/* <CInput
+                          {...register.firstName}
+                          {...field}
+                          id='firstName'
+                          valid={touchedFields.firstName && (errors.firstName == null)}
+                          invalid={touchedFields.firstName && !!errors.firstName?.message}
+                          name='firstName'
+                        /> */}
+                        {/* <CInvalidFeedback>{error}</CInvalidFeedback> */}
+                        {/* <p className='invalid-feedback'>{error?.message}</p> */}
+                      </>}
                   />
 
-                  <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback>
                 </CFormGroup>
               </CCol>
               <CCol xs>
                 <CFormGroup>
-                  <CLabel htmlFor='lastName'>Last Name</CLabel>
+                  <CLabel htmlFor='lastName'>Last Name*</CLabel>
 
                   <Controller
                     name='lastName'
@@ -116,13 +122,13 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage, serviceC
                       />}
                   />
 
-                  <CInvalidFeedback>{errors.lastName?.message}</CInvalidFeedback>
+                  <p className='invalid-feedback'>{errors.lastName?.message}</p>
                 </CFormGroup>
               </CCol>
             </CRow>
 
             <CFormGroup>
-              <CLabel htmlFor='email'>Email</CLabel>
+              <CLabel htmlFor='email'>Email*</CLabel>
 
               <Controller
                 name='email'
@@ -140,7 +146,28 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage, serviceC
 
               <CInvalidFeedback>{errors.email?.message}</CInvalidFeedback>
             </CFormGroup>
+            <CFormGroup>
+              <CLabel htmlFor='password'>Password*</CLabel>
+
+              <Controller
+                name='password'
+                control={control}
+                defaultValue=''
+                render={({ field: { ref, ...field } }) =>
+                  <CInput
+                    id='password'
+                    name='password'
+                    type='password'
+                    {...field}
+                    valid={touchedFields.password && (errors.password == null)}
+                    invalid={touchedFields.password && !!errors.password?.message}
+                  />}
+              />
+
+              <CInvalidFeedback>{errors.password?.message}</CInvalidFeedback>
+            </CFormGroup>
           </CModalBody>
+
           <CModalFooter>
             <CContainer>
               <CButton color='primary' type='submit'>

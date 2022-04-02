@@ -4,8 +4,13 @@ import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
 
 class Controller {
+  // async index (req, res) {
+  //   const users = await UserService.findAll()
+  //   return res.json(users)
+  // }
+
   async index (req, res) {
-    const users = await UserService.findAll()
+    const users = await UserService.find({ accountId: req.user.accountId })
     return res.json(users)
   }
 
@@ -48,7 +53,7 @@ class Controller {
         errors: errors.details
       })
     }
-    const userData = _.pick(req.body, ['email', 'password', 'name', 'surname', 'language', 'active', 'role'])
+    const userData = _.pick(req.body, ['email', 'password', 'firstName', 'lastName', 'active', 'role'])
     userData.email = userData.email.trim()
     userData.accountId = req.user.accountId
     const user = await UserService.create(userData)
@@ -59,11 +64,6 @@ class Controller {
         message: 'Failed to save the user.'
       })
     }
-  }
-
-  async index (req, res) {
-    const users = await UserService.find({ accountId: req.user.accountId })
-    return res.json(users)
   }
 
   async update (req, res) {

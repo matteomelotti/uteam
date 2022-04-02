@@ -1,4 +1,4 @@
-import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CModalFooter, CInvalidFeedback, CInput, CLabel, CFormGroup, CRow, CCol, CSpinner, CContainer, CForm } from '@coreui/react'
+import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CSelect, CModalFooter, CInvalidFeedback, CInput, CLabel, CFormGroup, CRow, CCol, CSpinner, CContainer, CForm } from '@coreui/react'
 // import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useForm, Controller } from 'react-hook-form'
@@ -15,11 +15,12 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
     firstName: yup.string().required(),
     lastName: yup.string().required(),
     email: yup.string().required(),
-    password: yup.string().required()
+    password: yup.string().required(),
+    role: yup.string().required()
   })
 
   const {
-    handleSubmit, control, register,
+    handleSubmit, control,
     formState: { errors, touchedFields }
   } = useForm({
     mode: 'all',
@@ -29,12 +30,12 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
 
   const { isLoading: isMutating, mutate } = useMutation(UserCreate, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(['users', { page, limit }])
+      queryClient.invalidateQueries(['users'])
       setShow(false)
 
       setNotifications([...notifications, {
         title: 'New user successfully created',
-        body: `Name: ${data.name}. Email: ${data.email}`,
+        body: `Name: ${data.data.firstName}. Email: ${data.data.email}`,
         autohide: 5000,
         color: 'success'
       }])
@@ -87,18 +88,14 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
                     defaultValue=''
                     render={({ field: { ref, value, name, ...field }, fieldState: { invalid, isTouched, isDirty, error }, formState: { errors } }) =>
                       <>
-                        <input {...register("firstName")} />
-                        <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback>
-                        {/* <CInput
-                          {...register.firstName}
+                        <CInput
                           {...field}
                           id='firstName'
                           valid={touchedFields.firstName && (errors.firstName == null)}
                           invalid={touchedFields.firstName && !!errors.firstName?.message}
                           name='firstName'
-                        /> */}
-                        {/* <CInvalidFeedback>{error}</CInvalidFeedback> */}
-                        {/* <p className='invalid-feedback'>{error?.message}</p> */}
+                        />
+                        <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback>
                       </>}
                   />
 
@@ -165,6 +162,30 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
               />
 
               <CInvalidFeedback>{errors.password?.message}</CInvalidFeedback>
+            </CFormGroup>
+
+            <CFormGroup>
+              <CLabel htmlFor='role'>Role*</CLabel>
+
+              <Controller
+                name='role'
+                control={control}
+                defaultValue=''
+                render={({ field: { ref, ...field } }) =>
+                  <CSelect
+                    id='role'
+                    name='role'
+                    {...field}
+                    valid={touchedFields.role && (errors.role == null)}
+                    invalid={touchedFields.role && !!errors.role?.message}
+                  >
+                    <option value=''>Select role</option>
+                    <option value='admin'>Admin</option>
+                    <option value='user'>User</option>
+                  </CSelect>}
+              />
+
+              <CInvalidFeedback>{errors.role?.message}</CInvalidFeedback>
             </CFormGroup>
           </CModalBody>
 

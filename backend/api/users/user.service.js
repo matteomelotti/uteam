@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import BaseService from '../../services/base.service.js'
 import EmailService from '../emails/email.service.js'
 import { v4 as uuidv4 } from 'uuid'
+import ChatService from '../chats/chat.service.js'
 
 class UsersService extends BaseService {
   getModel () {
@@ -28,6 +29,7 @@ class UsersService extends BaseService {
     data.sso = uuidv4()
     const user = new User(data)
     await user.save()
+    await ChatService.create({ user: user._id, chats: [] })
     if (sendForgot) {
       EmailService.forgotPasswordLink(data)
     }

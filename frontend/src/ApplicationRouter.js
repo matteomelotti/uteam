@@ -24,6 +24,7 @@ import { parseJwt } from './helpers/parseJwt'
 // import PrivateLayout from 'app/components/layout/PrivateLayout'
 const PrivateLayout = lazy(async () => await import('app/components/layout/PrivateLayout'))
 const Users = lazy(async () => await import('app/pages/users'))
+const Chats = lazy(async () => await import('app/pages/chats'))
 
 const Private = withCurrentUser(PrivateRoute)
 const OnlyPublic = withCurrentUser(OnlyPublicRoute)
@@ -58,6 +59,7 @@ const ApplicationRouter = () => {
       <OnlyPublic exact path='/auth/register' component={RegisterPage} layout={AuthLayout} />
       <Private exact path='/dashboard' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={DashboardPage} />
       <Private exact path='/users' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={Users} />
+      <Private exact path='/chats' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={Chats} />
       <Private exact path='/user/edit' layout={PrivateLayout} allowedRoles={['admin', 'user']} component={EditUserPage} />
     </Switch>
   )

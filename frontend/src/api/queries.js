@@ -15,8 +15,14 @@ const UsersListQuery = async () => {
   return result
 }
 
+const ChatsListQuery = async () => {
+  const result = await Axios.authenticated().get('/chats')
+  return result
+}
+
 export {
   Me,
   TicketsListQuery,
-  UsersListQuery
+  UsersListQuery,
+  ChatsListQuery
 }

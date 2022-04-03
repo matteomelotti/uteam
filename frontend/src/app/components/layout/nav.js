@@ -8,6 +8,12 @@ const menu = [
     name: <TranslateMessage message='sideBar.menu.admin.home' />,
     to: '/dashboard',
     icon: <CIcon name='cil-home' customClasses='c-sidebar-nav-icon' />
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: <TranslateMessage message='sideBar.menu.user.chats' />,
+    to: '/chats',
+    icon: <CIcon name='cil-home' customClasses='c-sidebar-nav-icon' />
   }
 ]
 

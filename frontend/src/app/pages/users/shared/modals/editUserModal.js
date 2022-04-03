@@ -73,7 +73,6 @@ const EditUserModal = ({
 
     // const checkedEmail = await _checkEmail(data.email);
 
-    // console.log(checkedEmail)
     // if ( !checkedEmail ) {
     //   return setError('email', {
     //     message: 'Email already exist.',

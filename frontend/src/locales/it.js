@@ -2,6 +2,9 @@ const it = {
   sideBar: {
     title: 'UTeam',
     menu: {
+      user: {
+        chats: 'Chat'
+      },
       admin: {
         home: 'Home',
         title: 'Menu Admin',

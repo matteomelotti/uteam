@@ -48,7 +48,6 @@ const TicketEditor = ({ ticket, ticketState, setTicketState }) => {
         setTicketState(null)
       }
     } catch (error) {
-      // console.log('error', error)
       ConfirmAlert.error('ticket non creato')
     }
     setOpenTicketEditor(false)

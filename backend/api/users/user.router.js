@@ -30,6 +30,10 @@ export default express
     wrap(authorizeRequest([ROLE.ADMIN])),
     wrap(userController.update)
   ])
+  .put('/activate/:id', [
+    wrap(authorizeRequest([ROLE.ADMIN])),
+    wrap(userController.activate)
+  ])
   .delete('/:id', [
     wrap(authorizeRequest([ROLE.ADMIN])),
     wrap(userController.delete)

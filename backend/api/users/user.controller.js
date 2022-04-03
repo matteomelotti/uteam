@@ -87,6 +87,18 @@ class Controller {
     }
   }
 
+  async activate (req, res) {
+    const result = await UserService.activate(req.params.id)
+    if (result) {
+      return res.json(result)
+    } else {
+      return res.status(422).json({
+        success: false,
+        message: 'Failed to update user.'
+      })
+    }
+  }
+
   async delete (req, res) {
     if (req.params.id !== req.user.id) {
       await UserService.delete(req.params.id)

@@ -1,5 +1,6 @@
 import { CButton } from '@coreui/react'
 import { useState } from 'react'
+import ActivateUserModal from '../modals/activateUserModal'
 
 const ActivateUserBtn = (props) => {
   const { user: { active } } = props
@@ -19,7 +20,12 @@ const ActivateUserBtn = (props) => {
       </CButton>
 
       {showActivateModal
-        ? (<p>todo</p>)
+        ? (
+          <ActivateUserModal
+            show={showActivateModal}
+            setShow={setShowActivateModal}
+            {...props}
+          />)
         : ''}
     </td>
   )

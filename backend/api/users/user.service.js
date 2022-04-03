@@ -50,6 +50,13 @@ class UsersService extends BaseService {
     return user
   }
 
+  async activate (userId) {
+    const { active } = await User.findOne({ _id: userId })
+    const user = await User.updateOne({ _id: userId }, { active: !active }, { new: true })
+
+    return user
+  }
+
   async updatePassword (userId, password) {
     const user = await this.byId(userId, {})
     const salt = bcrypt.genSaltSync(10)

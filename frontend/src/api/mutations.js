@@ -80,7 +80,11 @@ const UserCreate = async (data) => {
 
 const UserUpdate = async ({ id, ...data }) => {
   const result = await Axios.authenticated().put(`/users/${id}`, data)
-  console.log('res', result)
+  return result
+}
+
+const ActivateUser = async (id) => {
+  const result = await Axios.authenticated().put(`/users/activate/${id}`)
   return result
 }
 
@@ -99,5 +103,6 @@ export {
   TicketDelete,
   TicketComplete,
   UserCreate,
-  UserUpdate
+  UserUpdate,
+  ActivateUser
 }

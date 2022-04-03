@@ -105,7 +105,6 @@ const EditUserModal = ({
           <CModalBody>
             <CRow>
               <CCol xs>
-                {JSON.stringify(errors)}
                 <CFormGroup>
                   <CLabel htmlFor='firstName'>First Name*</CLabel>
                   <Controller

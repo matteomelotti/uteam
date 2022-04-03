@@ -1,5 +1,6 @@
 import { CButton } from '@coreui/react'
 import { useState } from 'react'
+import EditUserModal from '../modals/editUserModal'
 
 const EditUserBtn = (props) => {
   const [showEditUserModal, setShowEditUserModal] = useState(() => false)
@@ -18,7 +19,11 @@ const EditUserBtn = (props) => {
       </CButton>
 
       {showEditUserModal
-        ? (<><p>todo</p></>)
+        ? (<EditUserModal
+            show={showEditUserModal}
+            setShow={setShowEditUserModal}
+            {...props}
+           />)
         : ''}
     </td>
   )

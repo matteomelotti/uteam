@@ -25,6 +25,7 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
   } = useForm({
     mode: 'all',
     reValidateMode: 'onSubmit',
+    shouldFocusError: true,
     resolver: yupResolver(schema)
   })
 
@@ -203,11 +204,12 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
       </CModal>
 
       {isMutating
-        ? (<div className='loading'>
-          <CRow className='h-100 align-items-center justify-content-center'>
-            <CSpinner color='primary' grow className='custom-spinner' />
-          </CRow>
-        </div>
+        ? (
+          <div className='loading'>
+            <CRow className='h-100 align-items-center justify-content-center'>
+              <CSpinner color='primary' grow className='custom-spinner' />
+            </CRow>
+          </div>
           )
         : ''}
     </>

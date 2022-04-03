@@ -28,8 +28,25 @@ class UsersService extends BaseService {
     data.sso = uuidv4()
     const user = new User(data)
     await user.save()
-    if (sendForgot) { EmailService.forgotPasswordLink(data) }
-    if (sendConfirm) { EmailService.sendActivationEmail(data) }
+    if (sendForgot) {
+      EmailService.forgotPasswordLink(data)
+    }
+    if (sendConfirm) {
+      EmailService.sendActivationEmail(data)
+    }
+    return user
+  }
+
+  async update (userId, data) {
+    const updateData = { ...data }
+    // if (data.password) {
+    //   const salt = bcrypt.genSaltSync(10)
+    //   const hash = bcrypt.hashSync(data.password, salt)
+    //   updateData.password = hash
+    // }
+
+    const user = await User.updateOne({ _id: userId }, { updateData }, { new: true })
+
     return user
   }
 

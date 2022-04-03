@@ -84,8 +84,8 @@ class UserValidator {
     const schemaKeys = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
-      role: Joi.string(),
-      active: Joi.boolean()
+      role: Joi.string().required(),
+      email: Joi.string().required()
     }
     const schema = Joi.object().keys(schemaKeys)
     const { error } = schema.validate(obj, { abortEarly: false })

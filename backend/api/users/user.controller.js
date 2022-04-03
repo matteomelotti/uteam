@@ -10,7 +10,8 @@ class Controller {
   // }
 
   async index (req, res) {
-    const users = await UserService.find({ accountId: req.user.accountId })
+    // const users = await UserService.find({ accountId: req.user.accountId })
+    const users = await UserService.all()
     return res.json(users)
   }
 
@@ -74,7 +75,7 @@ class Controller {
         errors: errors.details
       })
     }
-    const userData = _.pick(req.body, ['name', 'surname', 'role', 'language', 'active'])
+    const userData = _.pick(req.body, ['firstName', 'lastName', 'role', 'email', 'password'])
     const result = await UserService.update(req.params.id, userData)
     if (result) {
       return res.json(result)

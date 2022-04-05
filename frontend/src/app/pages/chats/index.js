@@ -1,13 +1,25 @@
-import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 // import { useState } from 'react'
+import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
+import { useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import Loader from 'app/components/Loader'
 import { ChatsListQuery } from 'api/queries'
 // import { useParams } from 'react-router-dom'
+import Chat from './Chat'
+import { useEffect } from 'react'
 
 const Chats = () => {
+  const history = useHistory()
   // const [messages, setMessages] = useState([])
   // const { searchParams } = useParams()
+
+  useEffect(() => {
+    if (data?.data?.length > 0) {
+      history.push(`/chats?chat=${data.data[0].messagesWithId}`, undefined, {
+        shallow: true
+      })
+    }
+  }, [])
 
   const { isLoading, error, data } = useQuery('chats', ChatsListQuery, {
     retry: false
@@ -28,18 +40,9 @@ const Chats = () => {
           ? (
             <>
               <CCol lg={3}>
-                <CCard>
-                  <CCardBody>
-                    {data?.data?.map((chat, i) => (
-                      <div key={chat.messagesWithId}>
-                        <p>{chat.name}</p>
-                        <p>{chat.email}</p>
-                        <p>{chat.lastMessage}</p>
-                        <p>{chat.date}</p>
-                      </div>
-                    ))}
-                  </CCardBody>
-                </CCard>
+                {data?.data?.map((chat, i) => (
+                  <Chat key={chat.messagesWithId} chat={chat} />
+                ))}
               </CCol>
               <CCol lg={9}>
                 <CCard>

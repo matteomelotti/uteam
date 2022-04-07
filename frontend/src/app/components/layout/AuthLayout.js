@@ -28,7 +28,7 @@ const AuthLayout = ({ children }) => {
           </div>
         </div>
       </header>
-      <div className='col-md-12'>
+      <div className='col-md-12 mt-5'>
         <div className='card card-container'>
           <img
             src='//ssl.gstatic.com/accounts/ui/avatar_2x.png'

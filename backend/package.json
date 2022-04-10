@@ -42,6 +42,8 @@
     "querystring": "^0.2.1",
     "redis": "^3.1.2",
     "slugify": "^1.6.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "static-asset": "^0.6.0",
     "stripe": "^8.149.0",
     "uuid": "^8.3.2",

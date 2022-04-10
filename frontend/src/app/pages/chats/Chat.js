@@ -1,11 +1,12 @@
 import React from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { calculateTime } from '../../../libs/utils'
 import { CCard, CCardBody } from '@coreui/react'
+import useParamsQuery from 'app/components/common/useQuery'
 
 function Chat ({ chat }) {
   const history = useHistory()
-  const query = useQuery()
+  const query = useParamsQuery()
 
   return (
     <>
@@ -33,12 +34,6 @@ function Chat ({ chat }) {
       <hr />
     </>
   )
-}
-
-function useQuery () {
-  const { search } = useLocation()
-
-  return React.useMemo(() => new URLSearchParams(search), [search])
 }
 
 export default Chat

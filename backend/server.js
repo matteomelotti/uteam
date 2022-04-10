@@ -9,8 +9,11 @@ import { handleException } from './common/exceptions.js'
 import cors from 'cors'
 import { setLang } from './middlewares/lang.middleware.js'
 import cron from 'node-cron'
+import { Server } from 'socket.io'
 
 import './common/passport.js'
+import { SocketAddress } from 'net'
+import { addUser, removeUser } from './common/roomActions'
 
 const app = new Express()
 
@@ -39,7 +42,24 @@ export default class ExpressServer {
 
   listen (port = process.env.PORT) {
     const welcome = p => () => l.info(`up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname()} on port: ${p}}`)
-    http.createServer(app).listen(port, welcome(port))
+    const server = http.createServer(app)
+    const io = new Server(server, {
+      cors: {
+        origin: 'http://localhost:5000',
+        methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
+        credentials: true
+        // allowedHeaders: ["my-custom-header"],
+      }
+    })
+    // io.listen(3001)
+    io.on('connection', socket => {
+      socket.on('helloworld', (data) => {
+        console.log({ name: data.name })
+
+        socket.emit('dataReceived', { msg: 'data received' })
+      })
+    })
+    server.listen(port, welcome(port))
     return this
   }
 

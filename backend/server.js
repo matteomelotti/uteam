@@ -62,6 +62,9 @@ export default class ExpressServer {
           })
         }, 1000)
       })
+      socket.on('disconnect', () => {
+        removeUser(socket.id)
+      })
     })
     server.listen(port, welcome(port))
     return this

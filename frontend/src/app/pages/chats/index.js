@@ -33,6 +33,13 @@ const Chats = () => {
         shallow: true
       })
     }
+
+    return () => {
+      if (socket.current) {
+        socket.current.emit('disconnect')
+        socket.current.off()
+      }
+    }
   }, [])
 
   const { isLoading, error, data } = useQuery('chats', ChatsListQuery, {

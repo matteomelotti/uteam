@@ -27,7 +27,7 @@ const removeUser = async (socketId) => {
   users.splice(indesOf, 1)
 }
 
-module.export = {
+export {
   addUser,
   removeUser
 }

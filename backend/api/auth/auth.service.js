@@ -95,7 +95,7 @@ class AuthService {
 
   async generateToken (email) {
     const user = await User.findOne({ email: email, active: true }).exec()
-    const payload = { user: { email: user.email, role: user.role } }
+    const payload = { user: { id: user._id, email: user.email, role: user.role } }
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
     return token
   }

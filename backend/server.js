@@ -10,10 +10,8 @@ import cors from 'cors'
 import { setLang } from './middlewares/lang.middleware.js'
 import cron from 'node-cron'
 import { Server } from 'socket.io'
-
 import './common/passport.js'
-import { SocketAddress } from 'net'
-import { addUser, removeUser } from './common/roomActions'
+import { addUser, removeUser } from './common/roomActions.js'
 
 const app = new Express()
 
@@ -53,10 +51,16 @@ export default class ExpressServer {
     })
     // io.listen(3001)
     io.on('connection', socket => {
-      socket.on('helloworld', (data) => {
-        console.log({ name: data.name })
+      socket.on('join', async ({
+        userId
+      }) => {
+        const users = await addUser(userId, socket.id)
 
-        socket.emit('dataReceived', { msg: 'data received' })
+        setInterval(() => {
+          socket.emit('connectedUsers', {
+            users: users.filter(user => user.userId !== userId)
+          })
+        }, 1000)
       })
     })
     server.listen(port, welcome(port))
@@ -64,8 +68,7 @@ export default class ExpressServer {
   }
 
   initCron () {
-    cron.schedule('1 0 * * *', () => {
-    }, {
+    cron.schedule('1 0 * * *', () => {}, {
       scheduled: true
     })
     return this

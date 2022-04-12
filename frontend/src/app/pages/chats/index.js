@@ -1,19 +1,21 @@
-// import { useState } from 'react'
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 import { useHistory } from 'react-router-dom'
 import useParamsQuery from 'app/components/common/useQuery'
 import Loader from 'app/components/Loader'
 import { ChatsListQuery } from 'api/queries'
 import Chat from './Chat'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import io from 'socket.io-client'
-import { user } from 'state'
+import { user as _user } from '../../../state/index.js'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 const Chats = () => {
   const history = useHistory()
   // const [messages, setMessages] = useState([])
   // const { searchParams } = useParams()
+  const user = useRecoilValue(_user)
+  const [connectedUsers, setConnectedUsers] = useState([])
   const socket = useRef()
   const query = useParamsQuery()
   useEffect(() => {
@@ -21,11 +23,9 @@ const Chats = () => {
       socket.current = io('http://localhost:3000')
     }
     if (socket.current) {
-      console.log('soc', socket)
-      console.log('soc', socket.current)
-      socket.current.emit('join', {userId: user._id})
-      socket.current.on('dataReceived', (data) => {
-        console.log('dataReceived', data)
+      socket.current.emit('join', { userId: user.id })
+      socket.current.on('connectedUsers', ({ users }) => {
+        users.length > 0 && setConnectedUsers(users)
       })
     }
     if (data?.data?.length > 0 && !query.get('chat')) {
@@ -55,7 +55,11 @@ const Chats = () => {
             <>
               <CCol lg={3}>
                 {data?.data?.map((chat, i) => (
-                  <Chat key={chat.messagesWithId} chat={chat} />
+                  <Chat
+                    connectedUsers={connectedUsers}
+                    key={chat.messagesWithId}
+                    chat={chat}
+                  />
                 ))}
               </CCol>
               <CCol lg={9}>

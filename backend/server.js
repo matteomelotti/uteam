@@ -12,6 +12,7 @@ import cron from 'node-cron'
 import { Server } from 'socket.io'
 import './common/passport.js'
 import { addUser, removeUser } from './common/roomActions.js'
+import { loadMessages } from './common/messageActions.js'
 
 const app = new Express()
 
@@ -46,7 +47,7 @@ export default class ExpressServer {
         origin: 'http://localhost:5000',
         methods: ['GET', 'POST', 'PUT', 'OPTIONS'],
         credentials: true
-        // allowedHeaders: ["my-custom-header"],
+        // allowedHeaders: ['my-custom-header'],
       }
     })
     // io.listen(3001)
@@ -64,6 +65,10 @@ export default class ExpressServer {
       })
       socket.on('disconnect', () => {
         removeUser(socket.id)
+      })
+      socket.on('loadMessages', async ({ userId, messagesWith }) => {
+        const { chat, error } = await loadMessages(userId, messagesWith)
+        !error ? socket.emit('messagesLoaded', { chat }) : socket.emit('noChatFound')
       })
     })
     server.listen(port, welcome(port))

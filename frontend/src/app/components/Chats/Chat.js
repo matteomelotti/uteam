@@ -32,7 +32,7 @@ function Chat ({ chat, connectedUsers }) {
           </div>
         </CCardBody>
       </CCard>
-      <hr />
+      {/* <hr /> */}
     </>
   )
 }

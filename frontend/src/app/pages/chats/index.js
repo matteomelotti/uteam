@@ -11,6 +11,7 @@ import { user as _user } from '../../../state/index.js'
 import { useRecoilValue } from 'recoil'
 import Banner from '../../components/Messages/Banner'
 import Message from '../../components/Messages/Message'
+import MessageInputField from '../../components/Messages/MessageInputField'
 
 const Chats = () => {
   const history = useHistory()
@@ -128,7 +129,7 @@ const Chats = () => {
                         ))}
                     </div>
 
-                    {/* <p>input field</p> */}
+                    <MessageInputField />
                   </>
                 )}
               </CCol>

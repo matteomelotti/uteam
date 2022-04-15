@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { calculateTime } from '../../../libs/utils'
 
 function Message ({ message, user, deleteMsg, bannerProfilePic, divRef }) {
   const [deleteIcon, showDeleteIcon] = useState(false)
@@ -11,10 +12,10 @@ function Message ({ message, user, deleteMsg, bannerProfilePic, divRef }) {
         className={ifYouSender ? 'inlineContainer own' : 'inlineContainer'}
         onClick={() => ifYouSender && showDeleteIcon(!deleteIcon)}
       >
-        <img
+        {/* <img
           className='inlineIcon'
           src={ifYouSender ? user.profilePicUrl : bannerProfilePic}
-        />
+        /> */}
 
         <div className={ifYouSender ? 'ownBubble own' : 'otherBubble other'}>
           {message.msg}
@@ -25,7 +26,7 @@ function Message ({ message, user, deleteMsg, bannerProfilePic, divRef }) {
         )}
       </div>
 
-      <span className={ifYouSender ? 'own' : 'other'}>{(message.date)}</span>
+      <span className={ifYouSender ? 'own' : 'other'}>{calculateTime(message.date)}</span>
     </div>
   )
 }

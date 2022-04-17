@@ -15,13 +15,13 @@ import MessageInputField from '../../components/Messages/MessageInputField'
 
 const Chats = () => {
   const history = useHistory()
-  // const [messages, setMessages] = useState([])
   const user = useRecoilValue(_user)
   const [connectedUsers, setConnectedUsers] = useState([])
   const socket = useRef()
   const [messages, setMessages] = useState([])
   const [bannerData, setBannerData] = useState({ name: '', profilePicUrl: '' })
   const query = useParamsQuery()
+  const [chats, setChats] = useState([])
 
   const chatParam = query.get('chat')
   // ref for persisting the state of query string in the url
@@ -45,7 +45,7 @@ const Chats = () => {
 
     return () => {
       if (socket.current) {
-        socket.current.emit('disconnect')
+        socket.current.emit('disconnectUser')
         socket.current.off()
       }
     }
@@ -73,8 +73,42 @@ const Chats = () => {
     if (socket.current && chatParam) loadMessages()
   }, [chatParam])
 
+  const sendMsg = msg => {
+    if (socket.current) {
+      socket.current.emit('sendNewMsg', {
+        userId: user.id,
+        msgSendToUserId: openChatId.current,
+        msg
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on('msgSent', ({ newMsg }) => {
+        if (newMsg.receiver === openChatId.current) {
+          setMessages(prev => [...prev, newMsg])
+
+          setChats(prev => {
+            const previousChat = prev.find(
+              chat => chat.messagesWithId === newMsg.receiver
+            )
+
+            previousChat.lastMessage = newMsg.msg
+            previousChat.date = newMsg.date
+
+            return [...prev]
+          })
+        }
+      })
+    }
+  }, [])
+
   const { isLoading, error, data } = useQuery('chats', ChatsListQuery, {
-    retry: false
+    retry: false,
+    onSuccess: (data) => {
+      setChats(data.data)
+    }
   })
 
   if (isLoading) {
@@ -88,11 +122,11 @@ const Chats = () => {
   return (
     <>
       <CRow>
-        {data?.data?.length > 0
+        {chats.length > 0
           ? (
             <>
               <CCol lg={3}>
-                {data?.data?.map((chat, i) => (
+                {chats.map((chat, i) => (
                   <Chat
                     connectedUsers={connectedUsers}
                     key={chat.messagesWithId}
@@ -129,7 +163,7 @@ const Chats = () => {
                         ))}
                     </div>
 
-                    <MessageInputField />
+                    <MessageInputField sendMsg={sendMsg} />
                   </>
                 )}
               </CCol>

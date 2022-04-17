@@ -8,6 +8,11 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Col, Form, FormGroup } from 'react-bootstrap'
 import ConfirmAlert from 'libs/confirmAlert'
+import Storage from 'libs/storage'
+import { JWT_TOKEN } from 'config'
+import { useRecoilState } from 'recoil'
+import { user as _user } from '../../../state'
+import { parseJwt } from '../../../helpers/parseJwt'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -16,6 +21,7 @@ const schema = yup.object().shape({
 
 const LoginPage = (props) => {
   const { t } = useTranslation()
+  const [user, setUser] = useRecoilState(_user)
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -25,6 +31,13 @@ const LoginPage = (props) => {
   const onSubmit = async data => {
     try {
       await mutation.mutateAsync(data)
+      const token = Storage.getItem(JWT_TOKEN)
+      if (token) {
+        const user = parseJwt(token)
+        await setUser(user.user)
+      } else {
+        setUser(null)
+      }
     } catch (error) {
       ConfirmAlert.error(t('loginPage.emailPasswordInvalid'))
     }

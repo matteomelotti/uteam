@@ -22,3 +22,7 @@ export default express
   //   wrap(authorizeRequest([ROLE.ADMIN])),
   //   wrap(chatController.delete)
   // ])
+  .get('/user/:userToFindId', [
+    wrap(authorizeRequest([ROLE.ADMIN])),
+    wrap(chatController.userToFind)
+  ])

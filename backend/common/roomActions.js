@@ -27,7 +27,10 @@ const removeUser = async (socketId) => {
   users.splice(indesOf, 1)
 }
 
+const findConnectedUser = userId => users.find(user => user.userId === userId)
+
 export {
   addUser,
-  removeUser
+  removeUser,
+  findConnectedUser
 }

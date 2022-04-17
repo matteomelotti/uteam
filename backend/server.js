@@ -11,8 +11,8 @@ import { setLang } from './middlewares/lang.middleware.js'
 import cron from 'node-cron'
 import { Server } from 'socket.io'
 import './common/passport.js'
-import { addUser, removeUser } from './common/roomActions.js'
-import { loadMessages, sendMsg } from './common/messageActions.js'
+import { addUser, removeUser, findConnectedUser } from './common/roomActions.js'
+import { loadMessages, sendMsg, setMsgToUnread } from './common/messageActions.js'
 
 const app = new Express()
 
@@ -73,6 +73,15 @@ export default class ExpressServer {
 
       socket.on('sendNewMsg', async ({ userId, msgSendToUserId, msg }) => {
         const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg)
+        const receiverSocket = findConnectedUser(msgSendToUserId)
+
+        if (receiverSocket) {
+          // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+          io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
+        } else {
+          await setMsgToUnread(msgSendToUserId)
+        }
+
         !error && socket.emit('msgSent', { newMsg })
       })
     })

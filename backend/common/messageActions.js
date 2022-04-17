@@ -1,4 +1,5 @@
 import Chat from '../api/chats/chat.model.js'
+import User from '../api/users/user.model.js'
 
 const loadMessages = async (userId, messagesWith) => {
   try {
@@ -87,7 +88,23 @@ const sendMsg = async (userId, msgSendToUserId, msg) => {
   }
 }
 
+const setMsgToUnread = async userId => {
+  try {
+    const user = await User.findById(userId)
+
+    if (!user.unreadMessage) {
+      user.unreadMessage = true
+      await user.save()
+    }
+
+    return
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 export {
   loadMessages,
-  sendMsg
+  sendMsg,
+  setMsgToUnread
 }

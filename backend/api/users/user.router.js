@@ -38,3 +38,7 @@ export default express
     wrap(authorizeRequest([ROLE.ADMIN])),
     wrap(userController.delete)
   ])
+  .get('/search/:searchText', [
+    wrap(authorizeRequest([ROLE.ADMIN])),
+    wrap(userController.search)
+  ])

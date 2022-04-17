@@ -1,5 +1,6 @@
 import moment from 'moment'
 import Moment from 'react-moment'
+import Axios from 'libs/axios'
 
 const formatMoney = (locale, currency = 'EUR', number) => {
   return new Intl.NumberFormat('de-DE', { style: 'currency', currency: currency }).format(number)
@@ -27,4 +28,35 @@ const calculateTime = createdAt => {
   }
 }
 
-export { formatMoney, calculateTime }
+const newMsgSound = senderName => {
+  const sound = new Audio('/light.mp3')
+
+  sound && sound.play()
+
+  if (senderName) {
+    document.title = `New message from ${senderName}`
+
+    if (document.visibilityState === 'visible') {
+      setTimeout(() => {
+        document.title = 'Messages'
+      }, 5000)
+    }
+  }
+}
+
+const getUserInfo = async userToFindId => {
+  try {
+    const res = await Axios.authenticated().get(`/chats/user/${userToFindId}`)
+
+    return { name: res.data.name, profilePicUrl: res.data.profilePicUrl }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export {
+  formatMoney,
+  calculateTime,
+  newMsgSound,
+  getUserInfo
+}

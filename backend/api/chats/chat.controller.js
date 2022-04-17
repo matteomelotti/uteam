@@ -1,6 +1,7 @@
 // import ChatService from './ticket.service.js'
 // import ChatValidator from './ticket.validator.js'
 import Chat from './chat.model.js'
+import User from '../users/user.model.js'
 
 class Controller {
   async index (req, res) {
@@ -20,6 +21,21 @@ class Controller {
         }))
       }
       return res.json(chatsToBeSent)
+    } catch (error) {
+      console.error(error)
+      return res.status(500).send('Server Error')
+    }
+  }
+
+  async userToFind (req, res) {
+    try {
+      const user = await User.findById(req.params.userToFindId)
+
+      if (!user) {
+        return res.status(404).send('No User found')
+      }
+
+      return res.json({ name: user.firstName }) // future usage, profilePicUrl: user.profilePicUrl })
     } catch (error) {
       console.error(error)
       return res.status(500).send('Server Error')

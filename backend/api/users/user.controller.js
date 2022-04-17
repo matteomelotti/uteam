@@ -1,5 +1,6 @@
 import UserService from './user.service.js'
 import UserValidator from './user.validator.js'
+import User from './user.model.js'
 import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -13,6 +14,24 @@ class Controller {
     // const users = await UserService.find({ accountId: req.user.accountId })
     const users = await UserService.all()
     return res.json(users)
+  }
+
+  async search (req, res) {
+    try {
+      const { searchText } = req.params
+      const { userId } = req
+      if (searchText.length === 0) return
+
+      const results = await User.find({
+        firstName: { $regex: searchText, $options: 'i' },
+        $nor: [{ _id: userId }]
+      })
+
+      return res.status(200).json(results)
+    } catch (error) {
+      console.error(error)
+      return res.status(500).send('Server error')
+    }
   }
 
   async byId (req, res) {

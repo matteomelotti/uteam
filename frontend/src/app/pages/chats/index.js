@@ -1,4 +1,4 @@
-import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
+import { CCol, CRow } from '@coreui/react'
 import { useHistory } from 'react-router-dom'
 import useParamsQuery from 'app/components/common/useQuery'
 import Loader from 'app/components/Loader'
@@ -12,6 +12,8 @@ import { useRecoilValue } from 'recoil'
 import Banner from '../../components/Messages/Banner'
 import Message from '../../components/Messages/Message'
 import MessageInputField from '../../components/Messages/MessageInputField'
+import { getUserInfo, newMsgSound } from '../../../libs/utils'
+import ChatListSearch from '../../components/Chats/ChatListSearch'
 
 const Chats = () => {
   const history = useHistory()
@@ -68,6 +70,15 @@ const Chats = () => {
 
         openChatId.current = chat.messagesWith._id
       })
+
+      socket.current.on('noChatFound', async () => {
+        const { name, profilePicUrl } = await getUserInfo(chatParam)
+
+        setBannerData({ name, profilePicUrl })
+        setMessages([])
+
+        openChatId.current = chatParam
+      })
     }
 
     if (socket.current && chatParam) loadMessages()
@@ -101,6 +112,61 @@ const Chats = () => {
           })
         }
       })
+
+      socket.current.on('newMsgReceived', async ({ newMsg }) => {
+        let senderName
+
+        // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
+        if (newMsg.sender === openChatId.current) {
+          setMessages(prev => [...prev, newMsg])
+
+          setChats(prev => {
+            const previousChat = prev.find(
+              chat => chat.messagesWith === newMsg.sender
+            )
+            previousChat.lastMessage = newMsg.msg
+            previousChat.date = newMsg.date
+
+            senderName = previousChat.name
+
+            return [...prev]
+          })
+        } else {
+          const ifPreviouslyMessaged =
+            chats.filter(chat => chat.messagesWith === newMsg.sender).length > 0
+
+          if (ifPreviouslyMessaged) {
+            setChats(prev => {
+              const previousChat = prev.find(
+                chat => chat.messagesWith === newMsg.sender
+              )
+              previousChat.lastMessage = newMsg.msg
+              previousChat.date = newMsg.date
+
+              senderName = previousChat.name
+
+              return [
+                previousChat,
+                ...prev.filter(chat => chat.messagesWith !== newMsg.sender)
+              ]
+            })
+          } else {
+            const { name, profilePicUrl } = await getUserInfo(newMsg.sender)
+            senderName = name
+
+            const newChat = {
+              messagesWithId: newMsg.sender,
+              name,
+              profilePicUrl,
+              lastMessage: newMsg.msg,
+              date: newMsg.date
+            }
+            setChats(prev => [newChat, ...prev])
+          }
+        }
+
+        newMsgSound(senderName)
+      })
     }
   }, [])
 
@@ -126,6 +192,9 @@ const Chats = () => {
           ? (
             <>
               <CCol lg={3}>
+                <div style={{ marginBottom: '10px' }}>
+                  <ChatListSearch chats={chats} setChats={setChats} />
+                </div>
                 {chats.map((chat, i) => (
                   <Chat
                     connectedUsers={connectedUsers}

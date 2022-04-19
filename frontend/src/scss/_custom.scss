@@ -368,3 +368,23 @@ td.with-euro::after {
   background: green;
   border-radius: 1rem;
 }
+
+.dropdown-menu-autocomplete {
+  position: absolute;
+  top: auto;
+  left: auto;
+  z-index: 1000;
+  display: none;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  width: 96%;
+}

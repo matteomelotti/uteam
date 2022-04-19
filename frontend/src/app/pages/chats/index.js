@@ -1,4 +1,4 @@
-import { CCol, CRow } from '@coreui/react'
+import { CCol, CRow, CListGroup, CListGroupItem } from '@coreui/react'
 import { useHistory } from 'react-router-dom'
 import useParamsQuery from 'app/components/common/useQuery'
 import Loader from 'app/components/Loader'
@@ -168,7 +168,7 @@ const Chats = () => {
 
             const newChat = {
               messagesWithId: newMsg.sender,
-              name,
+              firstName: name,
               profilePicUrl,
               lastMessage: newMsg.msg,
               date: newMsg.date
@@ -192,8 +192,6 @@ const Chats = () => {
     }
   }, [status, data])
 
-  console.log('chats', chats)
-
   if (isLoading) {
     return <Loader />
   }
@@ -205,57 +203,59 @@ const Chats = () => {
   return (
     <>
       <CRow>
-        {chats.length > 0
-          ? (
-            <>
-              <CCol lg={3}>
-                <div style={{ marginBottom: '10px' }}>
-                  <ChatListSearch chats={chats} setChats={setChats} />
+        <>
+          <CCol lg={3}>
+            <div style={{ marginBottom: '10px' }}>
+              <ChatListSearch chats={chats} setChats={setChats} />
+            </div>
+            {chats.length > 0
+              ? (
+                <CListGroup>
+                  {chats.map((chat, i) => (
+                    <Chat
+                      connectedUsers={connectedUsers}
+                      key={chat.messagesWithId}
+                      chat={chat}
+                    />
+                  ))}
+                </CListGroup>
+                )
+              : ''}
+          </CCol>
+          <CCol lg={9}>
+            {chatParam && chats && (
+              <>
+                <div
+                  style={{
+                    overflow: 'auto',
+                    overflowX: 'hidden',
+                    maxHeight: '35rem',
+                    height: '35rem',
+                    backgroundColor: 'whitesmoke'
+                  }}
+                >
+                  <div style={{ position: 'sticky', top: '0' }}>
+                    <Banner bannerData={bannerData} />
+                  </div>
+
+                  {messages.length > 0 &&
+                    messages.map((message, i) => (
+                      <Message
+                        divRef={divRef}
+                        key={i}
+                        bannerProfilePic={bannerData.profilePicUrl}
+                        message={message}
+                        user={user}
+                        // deleteMsg={deleteMsg}
+                      />
+                    ))}
                 </div>
-                {chats.map((chat, i) => (
-                  <Chat
-                    connectedUsers={connectedUsers}
-                    key={chat.messagesWithId}
-                    chat={chat}
-                  />
-                ))}
-              </CCol>
-              <CCol lg={9}>
-                {chatParam && (
-                  <>
-                    <div
-                      style={{
-                        overflow: 'auto',
-                        overflowX: 'hidden',
-                        maxHeight: '35rem',
-                        height: '35rem',
-                        backgroundColor: 'whitesmoke'
-                      }}
-                    >
-                      <div style={{ position: 'sticky', top: '0' }}>
-                        <Banner bannerData={bannerData} />
-                      </div>
 
-                      {messages.length > 0 &&
-                        messages.map((message, i) => (
-                          <Message
-                            divRef={divRef}
-                            key={i}
-                            bannerProfilePic={bannerData.profilePicUrl}
-                            message={message}
-                            user={user}
-                            // deleteMsg={deleteMsg}
-                          />
-                        ))}
-                    </div>
-
-                    <MessageInputField sendMsg={sendMsg} />
-                  </>
-                )}
-              </CCol>
-            </>
-            )
-          : ''}
+                <MessageInputField sendMsg={sendMsg} />
+              </>
+            )}
+          </CCol>
+        </>
       </CRow>
     </>
   )

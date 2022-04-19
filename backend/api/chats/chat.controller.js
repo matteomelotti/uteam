@@ -13,7 +13,8 @@ class Controller {
       if (user.chats.length > 0) {
         chatsToBeSent = await user?.chats?.map(chat => ({
           messagesWithId: chat?.messagesWith._id,
-          name: chat?.messagesWith.firstName,
+          firstName: chat?.messagesWith.firstName,
+          lastName: chat?.messagesWith.lastName,
           email: chat?.messagesWith.email,
           // profilePicUrl: chat?.messagesWith?.profilePicUrl,
           lastMessage: chat?.messages[chat?.messages?.length - 1].msg,

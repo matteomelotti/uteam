@@ -15,6 +15,9 @@ import MessageInputField from '../../components/Messages/MessageInputField'
 import { getUserInfo, newMsgSound } from '../../../libs/utils'
 import ChatListSearch from '../../components/Chats/ChatListSearch'
 
+const scrollDivToBottom = divRef =>
+  divRef.current !== null && divRef.current.scrollIntoView({ behaviour: 'smooth' })
+
 const Chats = () => {
   const history = useHistory()
   const user = useRecoilValue(_user)
@@ -28,6 +31,14 @@ const Chats = () => {
   const chatParam = query.get('chat')
   // ref for persisting the state of query string in the url
   const openChatId = useRef('')
+  const divRef = useRef('')
+
+  const { status, isLoading, error, data } = useQuery('chats', ChatsListQuery, {
+    retry: false,
+    onSuccess: (data) => {
+      setChats(data.data)
+    }
+  })
 
   useEffect(() => {
     if (!socket.current) {
@@ -39,11 +50,11 @@ const Chats = () => {
         users.length > 0 && setConnectedUsers(users)
       })
     }
-    if (data?.data?.length > 0 && !chatParam) {
-      history.push(`/chats?chat=${data.data[0].messagesWithId}`, undefined, {
-        shallow: true
-      })
-    }
+    // if (data?.data?.length > 0 && !chatParam) {
+    //   history.push(`/chats?chat=${data.data[0].messagesWithId}`, undefined, {
+    //     shallow: true
+    //   })
+    // }
 
     return () => {
       if (socket.current) {
@@ -69,6 +80,7 @@ const Chats = () => {
         })
 
         openChatId.current = chat.messagesWith._id
+        divRef.current && scrollDivToBottom(divRef)
       })
 
       socket.current.on('noChatFound', async () => {
@@ -122,7 +134,7 @@ const Chats = () => {
 
           setChats(prev => {
             const previousChat = prev.find(
-              chat => chat.messagesWith === newMsg.sender
+              chat => chat.messagesWithId === newMsg.sender
             )
             previousChat.lastMessage = newMsg.msg
             previousChat.date = newMsg.date
@@ -133,12 +145,12 @@ const Chats = () => {
           })
         } else {
           const ifPreviouslyMessaged =
-            chats.filter(chat => chat.messagesWith === newMsg.sender).length > 0
+            chats.filter(chat => chat.messagesWithId === newMsg.sender).length > 0
 
           if (ifPreviouslyMessaged) {
             setChats(prev => {
               const previousChat = prev.find(
-                chat => chat.messagesWith === newMsg.sender
+                chat => chat.messagesWithId === newMsg.sender
               )
               previousChat.lastMessage = newMsg.msg
               previousChat.date = newMsg.date
@@ -147,7 +159,7 @@ const Chats = () => {
 
               return [
                 previousChat,
-                ...prev.filter(chat => chat.messagesWith !== newMsg.sender)
+                ...prev.filter(chat => chat.messagesWithId !== newMsg.sender)
               ]
             })
           } else {
@@ -170,12 +182,17 @@ const Chats = () => {
     }
   }, [])
 
-  const { isLoading, error, data } = useQuery('chats', ChatsListQuery, {
-    retry: false,
-    onSuccess: (data) => {
+  useEffect(() => {
+    messages.length > 0 && scrollDivToBottom(divRef)
+  }, [messages])
+
+  useEffect(() => {
+    if (status === 'success') {
       setChats(data.data)
     }
-  })
+  }, [status, data])
+
+  console.log('chats', chats)
 
   if (isLoading) {
     return <Loader />
@@ -222,7 +239,7 @@ const Chats = () => {
                       {messages.length > 0 &&
                         messages.map((message, i) => (
                           <Message
-                            // divRef={divRef}
+                            divRef={divRef}
                             key={i}
                             bannerProfilePic={bannerData.profilePicUrl}
                             message={message}

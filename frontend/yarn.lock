@@ -1068,12 +1068,7 @@
     "@coreui/coreui" "^3.0.0-beta.1"
     "chart.js" "^2.8.0"
 
-"@coreui/coreui-pro@^3.4.2":
-  "integrity" "sha512-NwwPzitDLlBACo6/8IH9NTp1mpd0i4+riSZ3HzC3dvRJyOFXa7CQwPgO5Ye7nS/wK1wXLZLswzDbEuppkq9ZTw=="
-  "resolved" "https://registry.npmjs.org/@coreui/coreui-pro/-/coreui-pro-3.4.2.tgz"
-  "version" "3.4.2"
-
-"@coreui/coreui@^3.0.0-beta.1":
+"@coreui/coreui@^3.0.0-beta.1", "@coreui/coreui@^3.4.0":
   "integrity" "sha512-WqzockdWVkXUNmNwlqdu+AxM+9JoiWGe4rKaySu/dZme1NvVOn2ukjJlpTkssal8UKcSHyitzNixtkMCmUxE1A=="
   "resolved" "https://registry.npmjs.org/@coreui/coreui/-/coreui-3.4.0.tgz"
   "version" "3.4.0"

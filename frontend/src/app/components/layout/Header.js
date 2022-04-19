@@ -8,7 +8,6 @@ import {
 import {
   CHeader,
   CToggler,
-  CHeaderBrand,
   CHeaderNav,
   CBadge
 } from '@coreui/react'
@@ -21,29 +20,18 @@ const Header = () => {
   const [sidebarShow, setSidebarShow] = useRecoilState(_sidebarShow)
 
   const toggleSidebar = () => {
-    const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
-    setSidebarShow(val)
-  }
-
-  const toggleSidebarMobile = () => {
-    const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
-    setSidebarShow(val)
+    setSidebarShow(!sidebarShow)
   }
 
   return (
     <CHeader withSubheader>
       <CToggler
         inHeader
-        className='ml-md-3 d-lg-none'
-        onClick={toggleSidebarMobile}
-      />
-      <CToggler
-        inHeader
-        className='ml-3 d-md-down-none'
+        className='ml-3'
         onClick={toggleSidebar}
       />
 
-      <CHeaderNav className='d-md-down-none mr-auto' />
+      <CHeaderNav className='header-nav d-none d-md-flex me-auto' />
 
       <CHeaderNav className='px-3'>
         <h3 className='m-0 mr-2'>

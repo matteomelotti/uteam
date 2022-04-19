@@ -2,7 +2,8 @@
 @import "variables";
 
 // Import CoreUI styles
-@import "~@coreui/coreui-pro/scss/coreui.scss";
+@import "@coreui/coreui/scss/coreui.scss";
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Some temp fixes
 @import "fixes";

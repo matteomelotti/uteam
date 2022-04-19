@@ -21,7 +21,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 
 const Sidebar = () => {
   const { t } = useTranslation()
-  const [show, setShow] = useRecoilState(_sidebarShow)
+  const [show] = useRecoilState(_sidebarShow)
   const user = useRecoilValue(_user)
   const navigation = getNav('it').filter((nav) => (
     (nav.allowRoles == null) || (nav.allowRoles?.includes(user?.role))
@@ -29,11 +29,11 @@ const Sidebar = () => {
 
   return (
     <CSidebar
-      show={!!show}
+      position='fixed'
       unfoldable
-      onShowChange={(val) => setShow(val)}
+      show={!!show}
     >
-      <CSidebarBrand className='d-md-down-none' to='/'>
+      <CSidebarBrand className='d-none d-md-flex' to='/'>
         <p className='h2'>
           {t('sideBar.title')}
         </p>

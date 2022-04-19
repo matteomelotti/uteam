@@ -1,5 +1,4 @@
-import { CCol, CRow, CListGroup, CListGroupItem } from '@coreui/react'
-import { useHistory } from 'react-router-dom'
+import { CCol, CRow, CListGroup } from '@coreui/react'
 import useParamsQuery from 'app/components/common/useQuery'
 import Loader from 'app/components/Loader'
 import { ChatsListQuery } from 'api/queries'
@@ -19,7 +18,6 @@ const scrollDivToBottom = divRef =>
   divRef.current !== null && divRef.current.scrollIntoView({ behaviour: 'smooth' })
 
 const Chats = () => {
-  const history = useHistory()
   const user = useRecoilValue(_user)
   const [connectedUsers, setConnectedUsers] = useState([])
   const socket = useRef()
@@ -33,7 +31,7 @@ const Chats = () => {
   const openChatId = useRef('')
   const divRef = useRef('')
 
-  const { status, isLoading, error, data } = useQuery('chats', ChatsListQuery, {
+  const { refetch, status, isLoading, error, data } = useQuery('chats', ChatsListQuery, {
     retry: false,
     onSuccess: (data) => {
       setChats(data.data)
@@ -50,11 +48,6 @@ const Chats = () => {
         users.length > 0 && setConnectedUsers(users)
       })
     }
-    // if (data?.data?.length > 0 && !chatParam) {
-    //   history.push(`/chats?chat=${data.data[0].messagesWithId}`, undefined, {
-    //     shallow: true
-    //   })
-    // }
 
     return () => {
       if (socket.current) {
@@ -94,7 +87,7 @@ const Chats = () => {
     }
 
     if (socket.current && chatParam) loadMessages()
-  }, [chatParam])
+  }, [chatParam, user])
 
   const sendMsg = msg => {
     if (socket.current) {
@@ -126,6 +119,9 @@ const Chats = () => {
       })
 
       socket.current.on('newMsgReceived', async ({ newMsg }) => {
+        const { data } = await refetch()
+        await setChats(data.data)
+        const chats = data.data
         let senderName
 
         // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
@@ -155,7 +151,7 @@ const Chats = () => {
               previousChat.lastMessage = newMsg.msg
               previousChat.date = newMsg.date
 
-              senderName = previousChat.name
+              senderName = previousChat.firstName
 
               return [
                 previousChat,
@@ -163,12 +159,13 @@ const Chats = () => {
               ]
             })
           } else {
-            const { name, profilePicUrl } = await getUserInfo(newMsg.sender)
-            senderName = name
+            const { firstName, profilePicUrl, lastName } = await getUserInfo(newMsg.sender)
+            senderName = firstName
 
             const newChat = {
               messagesWithId: newMsg.sender,
-              firstName: name,
+              firstName: firstName,
+              lastName: lastName,
               profilePicUrl,
               lastMessage: newMsg.msg,
               date: newMsg.date

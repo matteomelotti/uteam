@@ -36,7 +36,7 @@ class Controller {
         return res.status(404).send('No User found')
       }
 
-      return res.json({ name: user.firstName }) // future usage, profilePicUrl: user.profilePicUrl })
+      return res.json({ firstName: user.firstName, lastName: user.lastName }) // future usage, profilePicUrl: user.profilePicUrl })
     } catch (error) {
       console.error(error)
       return res.status(500).send('Server Error')

@@ -48,7 +48,7 @@ const getUserInfo = async userToFindId => {
   try {
     const res = await Axios.authenticated().get(`/chats/user/${userToFindId}`)
 
-    return { name: res.data.name, profilePicUrl: res.data.profilePicUrl }
+    return { firstName: res.data.firstName, profilePicUrl: res.data.profilePicUrl, lastName: res.data.lastName }
   } catch (error) {
     console.error(error)
   }

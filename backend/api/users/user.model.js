@@ -14,7 +14,11 @@ const schema = new localDatabase.Schema({
   confirmationToken: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
-  sso: String
+  sso: String,
+  unreadMessage: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true })
 
 const User = localDatabase.model('User', schema, 'user')

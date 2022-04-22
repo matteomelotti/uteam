@@ -1,6 +1,7 @@
 import CIcon from '@coreui/icons-react'
 import { ALLOWED_ROLES } from '../../permissions/roles'
 import TranslateMessage from '../../i18n/translateMessage'
+// import { user } from '../../../state'
 
 const menu = [
   {
@@ -14,6 +15,10 @@ const menu = [
     name: <TranslateMessage message='sideBar.menu.user.chats' />,
     to: '/chats',
     icon: <CIcon name='cil-home' customClasses='c-sidebar-nav-icon' />
+    // badge: {
+    //   color: 'danger',
+    //   text: 'NEW'
+    // }
   }
 ]
 

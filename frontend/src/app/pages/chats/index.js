@@ -119,9 +119,6 @@ const Chats = () => {
       })
 
       socket.current.on('newMsgReceived', async ({ newMsg }) => {
-        const { data } = await refetch()
-        await setChats(data.data)
-        const chats = data.data
         let senderName
 
         // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
@@ -140,38 +137,32 @@ const Chats = () => {
             return [...prev]
           })
         } else {
-          const ifPreviouslyMessaged =
-            chats.filter(chat => chat.messagesWithId === newMsg.sender).length > 0
+          const { firstName, profilePicUrl, lastName } = await getUserInfo(newMsg.sender)
+          senderName = firstName
 
-          if (ifPreviouslyMessaged) {
-            setChats(prev => {
-              const previousChat = prev.find(
-                chat => chat.messagesWithId === newMsg.sender
-              )
-              previousChat.lastMessage = newMsg.msg
-              previousChat.date = newMsg.date
+          const newChat = {
+            messagesWithId: newMsg.sender,
+            firstName: firstName,
+            lastName: lastName,
+            profilePicUrl,
+            lastMessage: newMsg.msg,
+            date: newMsg.date
+          }
 
-              senderName = previousChat.firstName
+          setChats(prev => {
+            const previousChat = Boolean(
+              prev.find(chat => chat.messagesWithId === newMsg.sender)
+            )
 
+            if (previousChat) {
               return [
-                previousChat,
+                newChat,
                 ...prev.filter(chat => chat.messagesWithId !== newMsg.sender)
               ]
-            })
-          } else {
-            const { firstName, profilePicUrl, lastName } = await getUserInfo(newMsg.sender)
-            senderName = firstName
-
-            const newChat = {
-              messagesWithId: newMsg.sender,
-              firstName: firstName,
-              lastName: lastName,
-              profilePicUrl,
-              lastMessage: newMsg.msg,
-              date: newMsg.date
+            } else {
+              return [newChat, ...prev]
             }
-            setChats(prev => [newChat, ...prev])
-          }
+          })
         }
 
         newMsgSound(senderName)

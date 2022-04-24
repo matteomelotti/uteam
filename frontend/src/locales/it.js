@@ -118,6 +118,9 @@ const it = {
     editUser: 'Modifica utente',
     logout: 'Logout',
     toggle: 'Attiva'
+  },
+  chatsPage: {
+    chooseChat: 'Scegli una chat'
   }
 }
 

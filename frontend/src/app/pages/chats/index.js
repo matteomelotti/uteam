@@ -13,11 +13,13 @@ import Message from '../../components/Messages/Message'
 import MessageInputField from '../../components/Messages/MessageInputField'
 import { getUserInfo, newMsgSound } from '../../../libs/utils'
 import ChatListSearch from '../../components/Chats/ChatListSearch'
+import { useTranslation } from 'react-i18next'
 
 const scrollDivToBottom = divRef =>
   divRef.current !== null && divRef.current.scrollIntoView({ behaviour: 'smooth' })
 
 const Chats = () => {
+  const { t } = useTranslation()
   const user = useRecoilValue(_user)
   const [connectedUsers, setConnectedUsers] = useState([])
   const socket = useRef()
@@ -31,7 +33,7 @@ const Chats = () => {
   const openChatId = useRef('')
   const divRef = useRef('')
 
-  const { refetch, status, isLoading, error, data } = useQuery('chats', ChatsListQuery, {
+  const { status, isLoading, error, data } = useQuery('chats', ChatsListQuery, {
     retry: false,
     onSuccess: (data) => {
       setChats(data.data)
@@ -211,37 +213,54 @@ const Chats = () => {
               : ''}
           </CCol>
           <CCol lg={9}>
-            {chatParam && chats && (
-              <>
-                <div
-                  style={{
-                    overflow: 'auto',
-                    overflowX: 'hidden',
-                    maxHeight: '35rem',
-                    height: '35rem',
-                    backgroundColor: 'whitesmoke'
-                  }}
-                >
-                  <div style={{ position: 'sticky', top: '0' }}>
-                    <Banner bannerData={bannerData} />
+            {chatParam && chats
+              ? (
+                <>
+                  <div
+                    style={{
+                      overflow: 'auto',
+                      overflowX: 'hidden',
+                      maxHeight: '35rem',
+                      height: '35rem',
+                      backgroundColor: 'whitesmoke'
+                    }}
+                  >
+                    <div style={{ position: 'sticky', top: '0' }}>
+                      <Banner bannerData={bannerData} />
+                    </div>
+
+                    {messages.length > 0 &&
+                      messages.map((message, i) => (
+                        <Message
+                          divRef={divRef}
+                          key={i}
+                          bannerProfilePic={bannerData.profilePicUrl}
+                          message={message}
+                          user={user}
+                          // deleteMsg={deleteMsg}
+                        />
+                      ))}
                   </div>
 
-                  {messages.length > 0 &&
-                    messages.map((message, i) => (
-                      <Message
-                        divRef={divRef}
-                        key={i}
-                        bannerProfilePic={bannerData.profilePicUrl}
-                        message={message}
-                        user={user}
-                        // deleteMsg={deleteMsg}
-                      />
-                    ))}
-                </div>
-
-                <MessageInputField sendMsg={sendMsg} />
-              </>
-            )}
+                  <MessageInputField sendMsg={sendMsg} />
+                </>)
+              : (
+                <>
+                  <div
+                    style={{
+                      overflow: 'auto',
+                      overflowX: 'hidden',
+                      maxHeight: '35rem',
+                      height: '35rem',
+                      backgroundColor: 'whitesmoke',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <h3>{t('chatsPage.chooseChat')}</h3>
+                  </div>
+                </>)}
           </CCol>
         </>
       </CRow>

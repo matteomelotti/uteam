@@ -46,8 +46,9 @@ const Header = () => {
           onClick={() => setDarkMode(!darkMode)}
           title='Toggle Light/Dark Mode'
         >
-          <CIcon name='cil-moon' className='c-d-dark-none' alt='CoreUI Icons Moon' />
-          <CIcon name='cil-sun' className='c-d-default-none' alt='CoreUI Icons Sun' />
+          {darkMode
+            ? <CIcon name='cil-moon' className='c-d-dark-none' alt='CoreUI Icons Moon' />
+            : <CIcon name='cil-sun' className='c-d-default-none' alt='CoreUI Icons Sun' />}
         </CToggler>
 
         <HeaderDropdown />

@@ -194,7 +194,7 @@ const Chats = () => {
     <>
       <CRow>
         <>
-          <CCol lg={3}>
+          <CCol lg={3} className='mb-5'>
             <div style={{ marginBottom: '10px' }}>
               <ChatListSearch chats={chats} setChats={setChats} />
             </div>

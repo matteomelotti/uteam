@@ -120,7 +120,8 @@ const it = {
     toggle: 'Attiva'
   },
   chatsPage: {
-    chooseChat: 'Scegli una chat'
+    chooseChat: 'Scegli una chat',
+    closeChat: 'Chiudi chat'
   }
 }
 

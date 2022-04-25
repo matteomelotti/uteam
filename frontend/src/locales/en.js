@@ -120,7 +120,8 @@ const en = {
     toggle: 'Toggle'
   },
   chatsPage: {
-    chooseChat: 'Choose a chat'
+    chooseChat: 'Choose a chat',
+    closeChat: 'Close chat'
   }
 }
 

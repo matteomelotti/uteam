@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Login } from 'api/mutations'
 import { useMutation } from 'react-query'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Col, Form, FormGroup } from 'react-bootstrap'
 import ConfirmAlert from 'libs/confirmAlert'
@@ -22,6 +22,7 @@ const schema = yup.object().shape({
 const LoginPage = (props) => {
   const { t } = useTranslation()
   const [user, setUser] = useRecoilState(_user)
+  const navigate = useNavigate()
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
@@ -41,7 +42,7 @@ const LoginPage = (props) => {
     } catch (error) {
       ConfirmAlert.error(t('loginPage.emailPasswordInvalid'))
     }
-    props.history.push('/dashboard')
+    navigate('/dashboard', { replace: true })
   }
 
   return (

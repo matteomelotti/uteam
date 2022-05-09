@@ -39,6 +39,11 @@ export const notifications = atom({
   default: []
 })
 
+export const connectesUsers = atom({
+  key: 'connectesUsers',
+  default: []
+})
+
 export const locale = atom({
   key: 'locale',
   default: LOCALES.ENGLISH

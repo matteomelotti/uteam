@@ -3,9 +3,9 @@ import useParamsQuery from 'app/components/common/useQuery'
 import Loader from 'app/components/Loader'
 import { ChatsListQuery } from 'api/queries'
 import Chat from '../../components/Chats/Chat'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { user as _user } from '../../../state/index.js'
 import { useRecoilValue } from 'recoil'
 import Banner from '../../components/Messages/Banner'
@@ -14,15 +14,16 @@ import MessageInputField from '../../components/Messages/MessageInputField'
 import { getUserInfo, newMsgSound } from '../../../libs/utils'
 import ChatListSearch from '../../components/Chats/ChatListSearch'
 import { useTranslation } from 'react-i18next'
+import { SocketContext } from 'context/socket'
 
 const scrollDivToBottom = divRef =>
-  divRef.current !== null && divRef.current.scrollIntoView({ behaviour: 'smooth' })
+  divRef && divRef.current && divRef.current.scrollIntoView({ behaviour: 'smooth' })
 
 const Chats = () => {
   const { t } = useTranslation()
   const user = useRecoilValue(_user)
   const [connectedUsers, setConnectedUsers] = useState([])
-  const socket = useRef()
+  const socket = useContext(SocketContext)
   const [messages, setMessages] = useState([])
   const [bannerData, setBannerData] = useState({ name: '', profilePicUrl: '' })
   const query = useParamsQuery()
@@ -41,32 +42,29 @@ const Chats = () => {
   })
 
   useEffect(() => {
-    if (!socket.current) {
-      socket.current = io('http://localhost:3000')
-    }
-    if (socket.current) {
-      socket.current.emit('join', { userId: user.id })
-      socket.current.on('connectedUsers', ({ users }) => {
+    if (socket) {
+      socket.emit('join', { userId: user._id })
+      socket.on('connectedUsers', ({ users }) => {
         users.length > 0 && setConnectedUsers(users)
       })
     }
 
     return () => {
-      if (socket.current) {
-        socket.current.emit('disconnectUser')
-        socket.current.off()
+      if (socket) {
+        socket.emit('disconnectUser')
+        socket.off()
       }
     }
   }, [])
 
   useEffect(() => {
     const loadMessages = () => {
-      socket.current.emit('loadMessages', {
-        userId: user.id,
+      socket.emit('loadMessages', {
+        userId: user._id,
         messagesWith: chatParam
       })
 
-      socket.current.on('messagesLoaded', async ({ chat }) => {
+      socket.on('messagesLoaded', async ({ chat }) => {
         setMessages(chat.messages)
         setBannerData({
           firstName: chat.messagesWith.firstName,
@@ -78,7 +76,7 @@ const Chats = () => {
         divRef.current && scrollDivToBottom(divRef)
       })
 
-      socket.current.on('noChatFound', async () => {
+      socket.on('noChatFound', async () => {
         const { name, profilePicUrl } = await getUserInfo(chatParam)
 
         setBannerData({ name, profilePicUrl })
@@ -88,13 +86,14 @@ const Chats = () => {
       })
     }
 
-    if (socket.current && chatParam) loadMessages()
+    if (socket && chatParam) loadMessages()
   }, [chatParam, user])
 
   const sendMsg = msg => {
-    if (socket.current) {
-      socket.current.emit('sendNewMsg', {
-        userId: user.id,
+    if (socket) {
+      console.log('mandato')
+      socket.emit('sendNewMsg', {
+        userId: user._id,
         msgSendToUserId: openChatId.current,
         msg
       })
@@ -102,8 +101,8 @@ const Chats = () => {
   }
 
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on('msgSent', ({ newMsg }) => {
+    if (socket) {
+      socket.on('msgSent', ({ newMsg }) => {
         if (newMsg.receiver === openChatId.current) {
           setMessages(prev => [...prev, newMsg])
 
@@ -120,7 +119,7 @@ const Chats = () => {
         }
       })
 
-      socket.current.on('newMsgReceived', async ({ newMsg }) => {
+      socket.on('newMsgReceived', async ({ newMsg }) => {
         let senderName
 
         // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER

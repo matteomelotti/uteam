@@ -79,7 +79,8 @@ export default class ExpressServer {
           // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
           io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
         } else {
-          await setMsgToUnread(msgSendToUserId)
+          const user = await setMsgToUnread(msgSendToUserId)
+          // io.to(receiverSocket.socketId).emit('MsgToUnread', user.unreadMessage)
         }
 
         !error && socket.emit('msgSent', { newMsg })

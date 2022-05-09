@@ -22,9 +22,9 @@ const addUser = async (userId, socketId) => {
 }
 
 const removeUser = async (socketId) => {
-  const indesOf = users.map(user => user.socketId).indexOf(socketId)
+  const indexOf = users.map(user => user.socketId).indexOf(socketId)
 
-  users.splice(indesOf, 1)
+  users.splice(indexOf, 1)
 }
 
 const findConnectedUser = userId => users.find(user => user.userId === userId)

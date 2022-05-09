@@ -95,9 +95,10 @@ const setMsgToUnread = async userId => {
     if (!user.unreadMessage) {
       user.unreadMessage = true
       await user.save()
+      return user
+    } else {
+      return user
     }
-
-    return
   } catch (error) {
     console.error(error)
   }

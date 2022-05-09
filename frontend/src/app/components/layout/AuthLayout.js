@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import { Container, Image, Col, Row, Card } from 'react-bootstrap'
 import '../../../css/authLayout/auth.css'
+import { AuthContent } from './components/index'
 
 const AuthLayout = ({ children }) => {
   return (
@@ -35,7 +35,7 @@ const AuthLayout = ({ children }) => {
             alt='profile-img'
             className='profile-img-card'
           />
-          {children}
+          <AuthContent />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom'
+import { Navigate, Route, Switch, useRouteMatch } from 'react-router-dom'
 import { CContainer, CFade } from '@coreui/react'
 
 // import routes from '../Routing/routes'

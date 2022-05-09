@@ -1,4 +1,4 @@
-import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CSelect, CModalFooter, CInvalidFeedback, CInput, CLabel, CFormGroup, CRow, CCol, CSpinner, CContainer, CForm } from '@coreui/react'
+import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CFormSelect, CModalFooter, CFormInput, CRow, CCol, CSpinner, CContainer, CForm } from '@coreui/react'
 // import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useForm, Controller } from 'react-hook-form'
@@ -81,37 +81,37 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
           <CModalBody>
             <CRow>
               <CCol xs>
-                <CFormGroup>
-                  <CLabel htmlFor='firstName'>First Name*</CLabel>
+                <div>
+                  <label htmlFor='firstName'>First Name*</label>
                   <Controller
                     name='firstName'
                     control={control}
                     defaultValue=''
                     render={({ field: { ref, value, name, ...field }, fieldState: { invalid, isTouched, isDirty, error }, formState: { errors } }) =>
                       <>
-                        <CInput
+                        <CFormInput
                           {...field}
                           id='firstName'
                           valid={touchedFields.firstName && (errors.firstName == null)}
                           invalid={touchedFields.firstName && !!errors.firstName?.message}
                           name='firstName'
                         />
-                        <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback>
+                        {/* <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback> */}
                       </>}
                   />
 
-                </CFormGroup>
+                </div>
               </CCol>
               <CCol xs>
-                <CFormGroup>
-                  <CLabel htmlFor='lastName'>Last Name*</CLabel>
+                <div>
+                  <label htmlFor='lastName'>Last Name*</label>
 
                   <Controller
                     name='lastName'
                     control={control}
                     defaultValue=''
                     render={({ field: { ref, ...field } }) =>
-                      <CInput
+                      <CFormInput
                         {...field}
                         id='lastName'
                         valid={touchedFields.lastName && (errors.lastName == null)}
@@ -121,19 +121,19 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
                   />
 
                   <p className='invalid-feedback'>{errors.lastName?.message}</p>
-                </CFormGroup>
+                </div>
               </CCol>
             </CRow>
 
-            <CFormGroup>
-              <CLabel htmlFor='email'>Email*</CLabel>
+            <div>
+              <label htmlFor='email'>Email*</label>
 
               <Controller
                 name='email'
                 control={control}
                 defaultValue=''
                 render={({ field: { ref, ...field } }) =>
-                  <CInput
+                  <CFormInput
                     id='email'
                     name='email'
                     {...field}
@@ -142,17 +142,17 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
                   />}
               />
 
-              <CInvalidFeedback>{errors.email?.message}</CInvalidFeedback>
-            </CFormGroup>
-            <CFormGroup>
-              <CLabel htmlFor='password'>Password*</CLabel>
+              {/* <CInvalidFeedback>{errors.email?.message}</CInvalidFeedback> */}
+            </div>
+            <div>
+              <label htmlFor='password'>Password*</label>
 
               <Controller
                 name='password'
                 control={control}
                 defaultValue=''
                 render={({ field: { ref, ...field } }) =>
-                  <CInput
+                  <CFormInput
                     id='password'
                     name='password'
                     type='password'
@@ -162,18 +162,18 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
                   />}
               />
 
-              <CInvalidFeedback>{errors.password?.message}</CInvalidFeedback>
-            </CFormGroup>
+              {/* <CInvalidFeedback>{errors.password?.message}</CInvalidFeedback> */}
+            </div>
 
-            <CFormGroup>
-              <CLabel htmlFor='role'>Role*</CLabel>
+            <div>
+              <label htmlFor='role'>Role*</label>
 
               <Controller
                 name='role'
                 control={control}
                 defaultValue=''
                 render={({ field: { ref, ...field } }) =>
-                  <CSelect
+                  <CFormSelect
                     id='role'
                     name='role'
                     {...field}
@@ -183,11 +183,11 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
                     <option value=''>Select role</option>
                     <option value='admin'>Admin</option>
                     <option value='user'>User</option>
-                  </CSelect>}
+                  </CFormSelect>}
               />
 
-              <CInvalidFeedback>{errors.role?.message}</CInvalidFeedback>
-            </CFormGroup>
+              {/* <CInvalidFeedback>{errors.role?.message}</CInvalidFeedback> */}
+            </div>
           </CModalBody>
 
           <CModalFooter>

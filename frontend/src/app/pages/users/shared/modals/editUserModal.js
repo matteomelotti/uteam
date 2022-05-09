@@ -1,4 +1,4 @@
-import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CSelect, CModalFooter, CInvalidFeedback, CInput, CLabel, CFormGroup, CRow, CCol, CSpinner, CContainer } from '@coreui/react'
+import { CButton, CModal, CModalHeader, CModalTitle, CModalBody, CFormSelect, CModalFooter, CFormInput, CRow, CCol, CSpinner, CContainer } from '@coreui/react'
 // import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useForm, Controller } from 'react-hook-form'
@@ -104,37 +104,37 @@ const EditUserModal = ({
           <CModalBody>
             <CRow>
               <CCol xs>
-                <CFormGroup>
-                  <CLabel htmlFor='firstName'>First Name*</CLabel>
+                <div>
+                  <label htmlFor='firstName'>First Name*</label>
                   <Controller
                     name='firstName'
                     control={control}
                     defaultValue={user.firstName}
                     render={({ field: { ref, ...field } }) =>
                       <>
-                        <CInput
+                        <CFormInput
                           {...field}
                           id='firstName'
                           valid={touchedFields.firstName && (errors.firstName == null)}
                           invalid={touchedFields.firstName && !!errors.firstName?.message}
                           name='firstName'
                         />
-                        <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback>
+                        {/* <CInvalidFeedback>{errors.firstName?.message}</CInvalidFeedback> */}
                       </>}
                   />
 
-                </CFormGroup>
+                </div>
               </CCol>
               <CCol xs>
-                <CFormGroup>
-                  <CLabel htmlFor='lastName'>Last Name*</CLabel>
+                <div>
+                  <label htmlFor='lastName'>Last Name*</label>
 
                   <Controller
                     name='lastName'
                     control={control}
                     defaultValue={user.lastName}
                     render={({ field: { ref, ...field } }) =>
-                      <CInput
+                      <CFormInput
                         {...field}
                         id='lastName'
                         valid={touchedFields.lastName && (errors.lastName == null)}
@@ -144,21 +144,21 @@ const EditUserModal = ({
                   />
 
                   <p className='invalid-feedback'>{errors.lastName?.message}</p>
-                </CFormGroup>
+                </div>
               </CCol>
             </CRow>
 
             <CRow>
               <CCol>
-                <CFormGroup>
-                  <CLabel htmlFor='edit_email'>Email</CLabel>
+                <div>
+                  <label htmlFor='edit_email'>Email</label>
 
                   <Controller
                     name='email'
                     control={control}
                     defaultValue={user.email}
                     render={({ field: { ref, ...field } }) =>
-                      <CInput
+                      <CFormInput
                         id='edit_email'
                         {...field}
                         valid={touchedFields.email && (errors.email == null)}
@@ -166,22 +166,22 @@ const EditUserModal = ({
                       />}
                   />
 
-                  <CInvalidFeedback>{errors.email?.message}</CInvalidFeedback>
-                </CFormGroup>
+                  {/* <CInvalidFeedback>{errors.email?.message}</CInvalidFeedback> */}
+                </div>
               </CCol>
             </CRow>
 
             <CRow>
               <CCol xs>
-                <CFormGroup>
-                  <CLabel htmlFor='edit_role'>User Role</CLabel>
+                <div>
+                  <label htmlFor='edit_role'>User Role</label>
 
                   <Controller
                     name='role'
                     control={control}
                     defaultValue={Object.entries(ALLOWED_ROLES).find(([key, val]) => val === user.role)[1]}
                     render={({ field: { ref, ...field } }) =>
-                      <CSelect
+                      <CFormSelect
                         {...field}
                         id='edit_role'
                         valid={touchedFields.role && (errors.role == null)}
@@ -192,11 +192,11 @@ const EditUserModal = ({
                             {val}
                           </option>
                         ))}
-                      </CSelect>}
+                      </CFormSelect>}
                   />
 
-                  <CInvalidFeedback>{errors.role?.message}</CInvalidFeedback>
-                </CFormGroup>
+                  {/* <CInvalidFeedback>{errors.role?.message}</CInvalidFeedback> */}
+                </div>
               </CCol>
             </CRow>
           </CModalBody>

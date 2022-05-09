@@ -20,11 +20,11 @@ const TicketEditor = ({ ticket, ticketState, setTicketState }) => {
     title: yup.string().required()
   })
 
-  useEffect(() => {
-    if (ticket && ticketState === 'edit') {
-      setOpenTicketEditor(true)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (ticket && ticketState === 'edit') {
+  //     setOpenTicketEditor(true)
+  //   }
+  // }, [])
 
   const { register, handleSubmit, reset, formState: { resetField, isSubmitting, errors } } = useForm({
     resolver: yupResolver(schema),

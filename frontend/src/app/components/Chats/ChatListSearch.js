@@ -1,9 +1,9 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AutoComplete from '../Autocomplete/Autocomplete'
 
 function ChatListSearch ({ chats, setChats }) {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const addChat = result => {
     const alreadyInChat =
@@ -11,7 +11,7 @@ function ChatListSearch ({ chats, setChats }) {
       chats.filter(chat => chat.messagesWithId === result._id).length > 0
 
     if (alreadyInChat) {
-      return history.push(`/chats?chat=${result._id}`)
+      return navigate(`/chats?chat=${result._id}`, { replace: true })
     } else {
       const newChat = {
         messagesWithId: result._id,
@@ -24,7 +24,7 @@ function ChatListSearch ({ chats, setChats }) {
 
       setChats(prev => [newChat, ...prev])
 
-      return history.push(`/chats?chat=${result._id}`)
+      return navigate(`/chats?chat=${result._id}`, { replace: true })
     }
   }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   CCreateElement,
@@ -17,15 +17,21 @@ import {
   sidebarShow as _sidebarShow
 } from '../../../state'
 
+import CIcon from '@coreui/icons-react'
+import TranslateMessage from '../../i18n/translateMessage'
+
 import { useRecoilState, useRecoilValue } from 'recoil'
+import io from 'socket.io-client'
+import { useQueryClient } from 'react-query'
 
 const Sidebar = () => {
   const { t } = useTranslation()
   const [show] = useRecoilState(_sidebarShow)
-  const user = useRecoilValue(_user)
-  const navigation = getNav('it').filter((nav) => (
-    (nav.allowRoles == null) || (nav.allowRoles?.includes(user?.role))
-  )).map(({ allowRoles, ...nav }) => nav)
+  const { unreadMessage } = useRecoilValue(_user)
+  const socket = useRef()
+  // const navigation = getNav('it').filter((nav) => (
+  //   (nav.allowRoles == null) || (nav.allowRoles?.includes(user?.role))
+  // )).map(({ allowRoles, ...nav }) => nav)
 
   return (
     <CSidebar
@@ -39,7 +45,26 @@ const Sidebar = () => {
         </p>
       </CSidebarBrand>
       <CSidebarNav>
-        <CCreateElement
+        <CSidebarNavItem
+          name={<TranslateMessage message='sideBar.menu.admin.home' />}
+          to='/dashboard'
+          icon={<CIcon name='cil-home' customClasses='c-sidebar-nav-icon' />}
+        />
+        <CSidebarNavItem
+          name={<TranslateMessage message='sideBar.menu.user.chats' />}
+          to='/chats'
+          icon={<CIcon name='cil-home' customClasses='c-sidebar-nav-icon' />}
+          badge={unreadMessage ? {
+            color: 'danger',
+            text: 'NEW'
+          } : {}}
+        />
+        <CSidebarNavItem
+          name={<TranslateMessage message='sideBar.menu.admin.users' />}
+          to='/users'
+          icon={<CIcon name='cil-people' customClasses='c-sidebar-nav-icon' />}
+        />
+        {/* <CCreateElement
           items={navigation}
           components={{
             CSidebarNavDivider,
@@ -47,7 +72,7 @@ const Sidebar = () => {
             CSidebarNavItem,
             CSidebarNavTitle
           }}
-        />
+        /> */}
         <CSidebarNavDivider />
       </CSidebarNav>
     </CSidebar>

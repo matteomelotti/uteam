@@ -58,7 +58,7 @@ const Users = () => {
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <CDataTable
+            {/* <CDataTable
               loading={isLoading}
               items={users}
               striped
@@ -80,7 +80,7 @@ const Users = () => {
                   <TableActionButtons.ActivateUserBtn page={page} limit={limit} user={user} />
                 )
               }}
-            />
+            /> */}
           </CCardBody>
         </CCard>
       </CCol>

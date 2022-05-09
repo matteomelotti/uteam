@@ -1,13 +1,11 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ApplicationRouter from './ApplicationRouter'
 import { RecoilRoot } from 'recoil'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import './scss/style.scss'
-import Loader from './app/components/Loader'
+import './scss-new/style.scss'
 import Notifications from './app/components/notifications'
+import { SocketContext, socket } from 'context/socket'
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -23,12 +21,10 @@ const App = () => {
   return (
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <React.Suspense fallback={<Loader />}>
-            <ApplicationRouter />
-          </React.Suspense>
-          <Notifications />
-        </BrowserRouter>
+        <SocketContext.Provider value={socket}>
+          <ApplicationRouter />
+        </SocketContext.Provider>
+        <Notifications />
       </QueryClientProvider>
     </RecoilRoot>
   )

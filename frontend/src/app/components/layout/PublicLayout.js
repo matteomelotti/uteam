@@ -1,9 +1,9 @@
-import BaseFooter from 'app/components/layout/BaseFooter'
 import React from 'react'
 import '../../../css/publicLayout/public.css'
 import { Link } from 'react-router-dom'
+import { AppContent } from './components/index'
 
-const PublicLayout = ({ children }) => {
+const PublicLayout = () => {
   return (
     <div>
       <header>
@@ -27,8 +27,7 @@ const PublicLayout = ({ children }) => {
           </div>
         </div>
       </header>
-      {children}
-      <BaseFooter />
+      <AppContent />
     </div>
   )
 }

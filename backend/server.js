@@ -55,7 +55,10 @@ export default class ExpressServer {
       socket.on('join', async ({
         userId
       }) => {
-        const users = await addUser(userId, socket.id)
+        let users
+        if (userId && socket) {
+          users = await addUser(userId, socket.id)
+        }
 
         setInterval(() => {
           socket.emit('connectedUsers', {
@@ -75,11 +78,12 @@ export default class ExpressServer {
         const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg)
         const receiverSocket = findConnectedUser(msgSendToUserId)
 
+        // io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
         if (receiverSocket) {
           // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-          io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
+          // io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
         } else {
-          const user = await setMsgToUnread(msgSendToUserId)
+          // const user = await setMsgToUnread(msgSendToUserId)
           // io.to(receiverSocket.socketId).emit('MsgToUnread', user.unreadMessage)
         }
 

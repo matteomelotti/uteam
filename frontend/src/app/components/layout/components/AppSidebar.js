@@ -6,14 +6,18 @@ import { AppSidebarNav } from './AppSidebarNav'
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 import nav from '../nav'
+import { useRecoilValue } from 'recoil'
+import { user as _user } from '../../../../state'
+import logoPng from '../../../../assets/icons/logo-blue.png'
 
 const AppSidebar = () => {
+  const user = useRecoilValue(_user)
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
   const navigation = nav.filter((nav) => (
-    (nav.allowRoles == null) // || (nav.allowRoles?.includes(user?.role))
+    (nav.allowRoles == null) || (nav.allowRoles?.includes(user?.role))
   )).map(({ allowRoles, ...nav }) => nav)
 
   return (
@@ -26,9 +30,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className='d-none d-md-flex' to='/'>
-        <p className='h2'>
-          {t('sideBar.title')}
-        </p>
+        <img src={logoPng} type='image/png' style={{ width: '160px', padding: '10px' }} />
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

@@ -64,7 +64,7 @@ export default class ExpressServer {
           socket.emit('connectedUsers', {
             users: users.filter(user => user.userId !== userId)
           })
-        }, 1000)
+        }, 2000)
       })
       socket.on('disconnectUser', () => {
         removeUser(socket.id)
@@ -78,7 +78,7 @@ export default class ExpressServer {
         const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg)
         const receiverSocket = findConnectedUser(msgSendToUserId)
 
-        // io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
+        io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
         if (receiverSocket) {
           // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
           // io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })

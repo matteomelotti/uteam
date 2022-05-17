@@ -39,12 +39,17 @@ export const notifications = atom({
   default: []
 })
 
-export const connectesUsers = atom({
-  key: 'connectesUsers',
-  default: []
-})
-
 export const locale = atom({
   key: 'locale',
   default: LOCALES.ENGLISH
+})
+
+export const connectedUsers = atom({
+  key: 'connectedUsers',
+  default: []
+})
+
+export const unreadMessages = atom({
+  key: 'unreadMessages',
+  default: false
 })

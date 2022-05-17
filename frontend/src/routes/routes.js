@@ -1,5 +1,6 @@
 import React, { lazy } from 'react'
 import withCurrentUser from 'hoc/withCurrentUser'
+import withSocket from 'hoc/withSocket'
 
 const PrivateRoute = lazy(async () => await import('routes/PrivateRoute'))
 const OnlyPublicRoute = lazy(async () => await import('routes/OnlyPublicRoute'))
@@ -14,7 +15,7 @@ const ActivateAccountPage = lazy(async () => await import('app/pages/auth/Activa
 const Chats = lazy(async () => await import('app/pages/chats'))
 const Users = lazy(async () => await import('app/pages/users'))
 
-const Private = withCurrentUser(PrivateRoute)
+const Private = withCurrentUser(withSocket(PrivateRoute))
 const OnlyPublic = withCurrentUser(OnlyPublicRoute)
 
 const routes = [

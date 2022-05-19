@@ -16,17 +16,18 @@ import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import { logo } from '../../../../assets/brand/logo'
+import { sidebarShow as _sidebarShow } from '../../../../state'
+import { useRecoilState } from 'recoil'
 
 const AppHeader = () => {
-  const dispatch = useDispatch()
-  const sidebarShow = useSelector((state) => state.sidebarShow)
+  const [sidebarShow, setSidebarShow] = useRecoilState(_sidebarShow)
 
   return (
     <CHeader position='sticky' className='mb-4'>
       <CContainer fluid>
         <CHeaderToggler
           className='ps-1'
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+          onClick={() => setSidebarShow(!sidebarShow) }
         >
           <CIcon icon={cilMenu} size='lg' />
         </CHeaderToggler>

@@ -6,8 +6,12 @@ import Chat from '../../components/Chats/Chat'
 import { useEffect, useRef, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 // import io from 'socket.io-client'
-import { user as _user } from '../../../state/index.js'
-import { useRecoilValue } from 'recoil'
+import {
+  user as _user,
+  connectedUsers as _connectedUsers,
+  unreadMessages as _unreadMessages
+} from '../../../state/index.js'
+import { useRecoilValue, useRecoilState } from 'recoil'
 import Banner from '../../components/Messages/Banner'
 import Message from '../../components/Messages/Message'
 import MessageInputField from '../../components/Messages/MessageInputField'
@@ -22,12 +26,13 @@ const scrollDivToBottom = divRef =>
 const Chats = () => {
   const { t } = useTranslation()
   const user = useRecoilValue(_user)
-  const [connectedUsers, setConnectedUsers] = useState([])
+  const [connectedUsers] = useRecoilValue(_connectedUsers)
   const socket = useContext(SocketContext)
   const [messages, setMessages] = useState([])
   const [bannerData, setBannerData] = useState({ name: '', profilePicUrl: '' })
   const query = useParamsQuery()
   const [chats, setChats] = useState([])
+  const [unreadMessages, setUnreadMessages] = useRecoilState(_unreadMessages)
 
   const chatParam = query.get('chat')
   // ref for persisting the state of query string in the url
@@ -42,22 +47,7 @@ const Chats = () => {
   })
 
   useEffect(() => {
-    if (socket) {
-      socket.emit('join', { userId: user._id })
-      socket.on('connectedUsers', ({ users }) => {
-        users.length > 0 && setConnectedUsers(users)
-      })
-    }
-
-    return () => {
-      if (socket) {
-        socket.emit('disconnectUser')
-        socket.off()
-      }
-    }
-  }, [])
-
-  useEffect(() => {
+    setUnreadMessages(false)
     const loadMessages = () => {
       socket.emit('loadMessages', {
         userId: user._id,
@@ -91,7 +81,6 @@ const Chats = () => {
 
   const sendMsg = msg => {
     if (socket) {
-      console.log('mandato')
       socket.emit('sendNewMsg', {
         userId: user._id,
         msgSendToUserId: openChatId.current,

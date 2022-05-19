@@ -11,7 +11,7 @@ import {
 function Chat ({ chat, connectedUsers }) {
   const navigate = useNavigate()
   const query = useParamsQuery()
-  const isOnline = connectedUsers.length >= 0 && connectedUsers.filter(user => user.userId === chat.messagesWithId).length > 0
+  const isOnline = connectedUsers && connectedUsers.length >= 0 && connectedUsers.filter(user => user.userId === chat.messagesWithId).length > 0
 
   return (
     <CListGroupItem

@@ -64,7 +64,7 @@ const CreateUserModal = ({ show, setShow, page = 1, limit = 5, setPage }) => {
   return (
     <>
       <CModal
-        show={show}
+        visible={show}
         onClose={() => setShow(!show)}
         closeOnBackdrop={false}
         size='lg'

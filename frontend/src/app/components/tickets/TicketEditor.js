@@ -64,7 +64,7 @@ const TicketEditor = ({ ticket, ticketState, setTicketState }) => {
     if (ticketEditorOpen) {
       return (
         <Form id='new-ticket-form' name='new-ticket-form' data-name='New Ticket Form' className='todo-form' onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group className='mb-3' controlId='formBasicEmail'> {/* todo-add */}
+          <Form.Group className='mb-3'> {/* todo-add */}
             {/* <Form.Label>Ticket title</Form.Label> */}
             <Form.Control type='text' placeholder='Ticket title' name='title' aria-describedby='titleHelp' maxLength='256' data-name='Title' id='ticket-title' {...register('title', { required: true })} />
             <Form.Text className='form-text error'>{errors.title?.message}</Form.Text>

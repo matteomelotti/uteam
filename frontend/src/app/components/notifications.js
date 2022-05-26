@@ -8,18 +8,30 @@ const Notifications = () => {
   const notifications = useRecoilValue(_notifications)
 
   return (
-    <CToaster position='top-right'>
+    <CToaster className='position-fixed top-0 end-0'>
       {notifications.map((notify, index) => {
         return (
           <CToast
-            key={`notify_${index}`}
-            show
-            autohide={notify.autohide || 15000}
-            fade={notify.fade || true}
+            key={index}
+            autohide
+            visible
+            delay={notify.autohide || 15000}
             color={notify.color || 'dark'}
           >
             <CToastHeader closeButton>
-              {notify.title}
+              <svg
+                className='rounded me-2'
+                width='20'
+                height='20'
+                xmlns='http://www.w3.org/2000/svg'
+                preserveAspectRatio='xMidYMid slice'
+                focusable='false'
+                role='img'
+              >
+                <rect width='100%' height='100%' fill='#007aff' />
+              </svg>
+              <strong className='me-auto'>{notify.title}</strong>
+              {/* <small>7 min ago</small> */}
             </CToastHeader>
             <CToastBody dangerouslySetInnerHTML={{ __html: notify.body }} />
           </CToast>

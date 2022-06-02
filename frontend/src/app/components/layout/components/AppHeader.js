@@ -15,9 +15,9 @@ import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
-import { logo } from '../../../../assets/brand/logo'
 import { sidebarShow as _sidebarShow } from '../../../../state'
 import { useRecoilState } from 'recoil'
+import logoPng from '../../../../assets/icons/logo-blue.png'
 
 const AppHeader = () => {
   const [sidebarShow, setSidebarShow] = useRecoilState(_sidebarShow)
@@ -32,7 +32,7 @@ const AppHeader = () => {
           <CIcon icon={cilMenu} size='lg' />
         </CHeaderToggler>
         <CHeaderBrand className='mx-auto d-md-none' to='/'>
-          <CIcon icon={logo} height={48} alt='Logo' />
+          <img src={logoPng} type='image/png' style={{ width: '160px', padding: '10px' }} />
         </CHeaderBrand>
         <CHeaderNav className='d-none d-md-flex me-auto' />
         <CHeaderNav>

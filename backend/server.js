@@ -50,7 +50,7 @@ export default class ExpressServer {
         // allowedHeaders: ['my-custom-header'],
       }
     })
-    // io.listen(3001)
+
     io.on('connection', socket => {
       socket.on('join', async ({
         userId
@@ -79,13 +79,13 @@ export default class ExpressServer {
         const receiverSocket = findConnectedUser(msgSendToUserId)
 
         io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
-        if (receiverSocket) {
-          // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-          // io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
-        } else {
-          // const user = await setMsgToUnread(msgSendToUserId)
-          // io.to(receiverSocket.socketId).emit('MsgToUnread', user.unreadMessage)
-        }
+        // if (receiverSocket) {
+        //   // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+        //   io.to(receiverSocket.socketId).emit('newMsgReceived', { newMsg })
+        // } else {
+        //   const user = await setMsgToUnread(msgSendToUserId)
+        //   io.to(receiverSocket.socketId).emit('MsgToUnread', user.unreadMessage)
+        // }
 
         !error && socket.emit('msgSent', { newMsg })
       })

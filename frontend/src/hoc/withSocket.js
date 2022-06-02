@@ -17,7 +17,7 @@ const withSocket = (Component) => (props) => {
     if (socket && user) {
       socket.emit('join', { userId: user._id })
       socket.on('connectedUsers', ({ users }) => {
-        users.length > 0 && setConnectedUsers(users)
+        if (users.length > 0) setConnectedUsers(users)
       })
     }
 
@@ -31,7 +31,7 @@ const withSocket = (Component) => (props) => {
         socket.off()
       }
     }
-  }, [user, socket])
+  }, [])
 
   return <Component {...props} />
 }

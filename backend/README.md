@@ -1,17 +1,19 @@
 # uteam Boilerplate
 
 This project contains everything you need to setup a fully featured SaaS API in 5 minutes.
+
 # Installation
+
 Make sure you have MongoDB (4+) installed and running.
 
 Then make sure you have Node installed. Version `14` or higher is required.
 
-Install all dependencies by running 
+Install all dependencies by running
 
 ```bash
 npm install
 ```
- 
+
 Copy `.env.example` into `.env`.
 
 Store email templates on database by typing:
@@ -30,7 +32,6 @@ npm run dev
 
 Below the meaning of every environment variable you can setup.
 
-
 `PORT=":3000"` the API server port number
 
 `LOG_LEVEL="debug"` set info on the production environment
@@ -45,10 +46,10 @@ Below the meaning of every environment variable you can setup.
 
 `AVAILABLE_LOCALES=en it` an array of available locales for translations
 
-`LOCAL_MONGO_CONNECTION='mongodb://localhost/uteam-db'` the MongoDB connection string
+`LOCAL_MONGO_CONNECTION='mongodb://uteam-mongo:27017/uteam-db'` the MongoDB connection string
 
 `REDIS_HOST=""` Redis server host
-`REDIS_PORT=""`  Redis server port
+`REDIS_PORT=""` Redis server port
 
 `DEFAULT_EMAIL_FROM="noreply@test.com"` send every notification email from this address
 
@@ -63,40 +64,39 @@ Below the meaning of every environment variable you can setup.
 
 `FATTURA24_KEY="XYZ"` the Fattura 24 secret key (Italian market only)
 
-`FRONTEND_LOGIN_URL="http://localhost:5000/auth/login"` raplace http://localhost:5000 with the real production host of the React frontend
+`FRONTEND_LOGIN_URL="http://localhost:3000/auth/login"` raplace http://localhost:3000 with the real production host of the React frontend
 
 `TRIAL_DAYS=15` how many days a new user can work without subscribing
 
 `PAYMENT_FAILED_RETRY_DAYS=7` how many days a user can work after the first failed payment (and before Stripe cancel the subscription)
 
-
 # Features
 
 ### API and Frontend
 
-* user registration of account with subdomain, email and password
-* user email activation with 6 characters code and account creation
-* resend activation code if not received
-* user password reset through code sent by email
-* user login
-* user logout
-* user change password once logged in
+- user registration of account with subdomain, email and password
+- user email activation with 6 characters code and account creation
+- resend activation code if not received
+- user password reset through code sent by email
+- user login
+- user logout
+- user change password once logged in
 
 ### API only
 
-* account's users list (by admins only)
-* account's user create (by admins only)
-* account's user update (by admins only)
-* stripe webhooks handling
-* events notifications by email:
+- account's users list (by admins only)
+- account's user create (by admins only)
+- account's user update (by admins only)
+- stripe webhooks handling
+- events notifications by email:
   - new user subscribed
   - succesful payments
   - failed payments
-* daily notifications by email:
+- daily notifications by email:
   - expiring trials
   - failed payments
   - account suspension due to failed payments
 
 ### CREDITS
 
-Author: Matteo Melotti <matteo.melotti11@gmail.com> 
+Author: Matteo Melotti <matteo.melotti11@gmail.com>

@@ -1,0 +1,25 @@
+version: '2'
+
+# Define the services/containers to be run
+services:
+  uteam-frontend: #name of your service
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile # specify the directory of the Dockerfile
+    command: bash -c "npm run start"
+    ports:
+      - '3001:3001' #specify ports forwarding
+    volumes:
+      - .:/app
+      # - ./frontend:/app
+      - node_modules:/app/node_modules
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+volumes:
+  node_modules:
+
+networks:
+  uteam-network:
+    external: false

@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="UTeam" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
+  <img alt="UTeam" src="./frontend/src/assets/icons/logo-blue.png" width="60" />
 </p>
 <h1 align="center">
   UTeam
@@ -7,9 +7,12 @@
 
 This is a very (very) simple MERN app for ToDo list with Chat features on Socket.io (+ Docker)
 
+(WIP)
+
 ## 🚀 Quick start
 
 1.  **Enter backend and frontend folder**
+
     Open backend and frontend folders into separate terminal windows
 
 2.  **Setup app**

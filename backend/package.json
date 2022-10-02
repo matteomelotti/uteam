@@ -11,7 +11,8 @@
     "dev": "nodemon index.js | pino-pretty ",
     "prod": "node index.js | pino-pretty ",
     "linter": "standard --fix",
-    "store:emails": "node scripts/storeEmails.js | pino-pretty"
+    "store:emails": "node scripts/storeEmails.js | pino-pretty",
+    "seed": "node seeds.js"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",

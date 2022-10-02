@@ -1,6 +1,6 @@
-import React, { lazy } from 'react'
 import withCurrentUser from 'hoc/withCurrentUser'
 import withSocket from 'hoc/withSocket'
+import { lazy } from 'react'
 
 const PrivateRoute = lazy(async () => await import('routes/PrivateRoute'))
 const OnlyPublicRoute = lazy(async () => await import('routes/OnlyPublicRoute'))

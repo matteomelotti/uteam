@@ -1,7 +1,7 @@
-import { faTrash, faCircleNotch, faEdit, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMutation, useQueryClient } from 'react-query'
 import { TicketComplete } from 'api/mutations'
+import { useMutation, useQueryClient } from 'react-query'
 import { useRecoilState } from 'recoil'
 import {
   notifications as _notifications

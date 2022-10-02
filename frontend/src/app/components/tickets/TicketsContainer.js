@@ -1,13 +1,12 @@
-import React from 'react'
 // import { useTranslation } from 'react-i18next'
-import { useQuery } from 'react-query'
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
-import Loader from 'app/components/Loader'
-import { TicketsListQuery } from 'api/queries'
-import { Container, Row, Col } from 'react-bootstrap'
-import TicketsList from './TicketsList'
-import TicketEditor from './TicketEditor'
-import './TicketsContainer.scss'
+import { TicketsListQuery } from 'api/queries';
+import Loader from 'app/components/Loader';
+import { Container, Row } from 'react-bootstrap';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { useQuery } from 'react-query';
+import TicketEditor from './TicketEditor';
+import './TicketsContainer.scss';
+import TicketsList from './TicketsList';
 
 const TicketsContainer = ({ user }) => {
   // const { t } = useTranslation()

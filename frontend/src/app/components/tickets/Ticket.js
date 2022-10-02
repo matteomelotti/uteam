@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // import { useTranslation } from 'react-i18next'
 // import { useQuery } from 'react-query'
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Link } from 'react-router-dom'
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 // import Loader from 'app/components/Loader'
-import { Form, Button } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './Ticket.scss'
+import { faCircleNotch, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faCircleNotch, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { TicketDelete } from 'api/mutations'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { TicketDelete, TicketComplete } from 'api/mutations'
 import { useMutation, useQueryClient } from 'react-query'
+import './Ticket.scss'
 // import ConfirmAlert from 'libs/confirmAlert'
-import DeleteConfirmation from '../common/DeleteConfirmation'
 import { useRecoilState } from 'recoil'
 import {
   notifications as _notifications
 } from '../../../state'
-import TicketEditor from './TicketEditor'
+import DeleteConfirmation from '../common/DeleteConfirmation'
 import CompleteTicket from './CompleteTicket'
+import TicketEditor from './TicketEditor'
 
 const Ticket = ({ ticket }) => {
   const { title, _id: ticketId } = ticket

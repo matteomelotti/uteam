@@ -1,14 +1,11 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
 import {
-  cilHome,
-  cilEnvelopeOpen,
-  cilPeople
+  cilEnvelopeOpen, cilHome, cilPeople
 } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import { CNavItem } from '@coreui/react'
 
-import { ALLOWED_ROLES } from '../../permissions/roles'
 import TranslateMessage from '../../i18n/translateMessage'
+import { ALLOWED_ROLES } from '../../permissions/roles'
 
 const menu = [
   {

@@ -70,7 +70,7 @@ export default class ExpressServer {
 
         setInterval(() => {
           socket.emit('connectedUsers', {
-            users: users.filter((user) => user.userId !== userId),
+            users: users?.filter((user) => user.userId !== userId),
           });
         }, 2000);
       });

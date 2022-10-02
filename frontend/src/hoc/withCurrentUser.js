@@ -1,8 +1,7 @@
-import React from 'react'
-import { useQuery } from 'react-query'
 import { Me } from 'api/queries'
-import i18next from 'libs/i18n'
 import Loader from 'app/components/Loader'
+import i18next from 'libs/i18n'
+import { useQuery } from 'react-query'
 import { useRecoilState } from 'recoil'
 import { user as _user } from '../state/'
 

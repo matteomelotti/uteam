@@ -1,6 +1,6 @@
 import axios from 'axios'
-import Storage from './storage'
 import { API_URL, JWT_TOKEN } from 'config'
+import Storage from './storage'
 
 // const formatErrors = (error) => {
 //   let msg = '<ul>'
@@ -59,11 +59,11 @@ class Axios {
     })
   }
 
-  base () {
+  base() {
     return this.instance
   }
 
-  authenticated () {
+  authenticated() {
     this.instance.defaults.headers.common.Authorization = `Bearer ${Storage.getItem(JWT_TOKEN)}`
     return this.instance
   }

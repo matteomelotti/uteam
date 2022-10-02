@@ -1,37 +1,31 @@
-import React, { useEffect, lazy, Suspense } from 'react'
+import React, { useContext, useEffect, lazy, Suspense, useState } from 'react'
 import { BrowserRouter, Route, Routes, HashRouter, Navigate } from 'react-router-dom'
 import { CSpinner } from '@coreui/react'
 
 import withCurrentUser from 'hoc/withCurrentUser'
+import withSocket from 'hoc/withSocket'
 
 import Storage from 'libs/storage'
 import { JWT_TOKEN } from 'config'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { user as _user } from './state'
 import { parseJwt } from './helpers/parseJwt'
 
 import { privateRoutes } from './routes/routes'
 
-// import PrivateLayout from 'app/components/layout/PrivateLayout'
-const PrivateRoute = lazy(async () => await import('routes/PrivateRoute'))
-const DashboardPage = lazy(async () => await import('app/pages/dashboard/DashboardPage'))
 const PrivateLayout = lazy(async () => await import('app/components/layout/PrivateLayout'))
 const PublicLayout = lazy(async () => await import('app/components/layout/PublicLayout'))
 const AuthLayout = lazy(async () => await import('app/components/layout/AuthLayout'))
 
 const OnlyPublicRoute = lazy(async () => await import('routes/OnlyPublicRoute'))
-const IndexPage = lazy(async () => await import('app/pages/public/IndexPage'))
 const LoginPage = lazy(async () => await import('app/pages/auth/LoginPage'))
 const ForgotPasswordPage = lazy(async () => await import('app/pages/auth/ForgotPasswordPage'))
 const ResetPasswordPage = lazy(async () => await import('app/pages/auth/ResetPasswordPage'))
 const ResendActivationPage = lazy(async () => await import('app/pages/auth/ResendActivationPage'))
 const RegisterPage = lazy(async () => await import('app/pages/auth/RegisterPage'))
 const ActivateAccountPage = lazy(async () => await import('app/pages/auth/ActivateAccountPage'))
-const Chats = lazy(async () => await import('app/pages/chats'))
-const Users = lazy(async () => await import('app/pages/users'))
 
-const Private = withCurrentUser(PrivateRoute)
-const OnlyPublic = withCurrentUser(OnlyPublicRoute)
+const OnlyPublic = withCurrentUser(withSocket(OnlyPublicRoute))
 
 const ApplicationRouter = () => {
   // const [user, setUser] = useRecoilState(_user)

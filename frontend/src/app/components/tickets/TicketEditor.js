@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import { useEffect, useState } from 'react';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { useTranslation } from 'react-i18next';
 // import Loader from 'app/components/Loader'
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { TicketCreate, TicketEdit } from 'api/mutations'
-import { useMutation, useQueryClient } from 'react-query'
-import { Button, Form, FormGroup, Col } from 'react-bootstrap'
-import ConfirmAlert from 'libs/confirmAlert'
-import './TicketForm.scss'
+import { yupResolver } from '@hookform/resolvers/yup';
+import { TicketCreate, TicketEdit } from 'api/mutations';
+import ConfirmAlert from 'libs/confirmAlert';
+import { Button, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
+import * as yup from 'yup';
+import './TicketForm.scss';
 
 // TODO: deve diventare ache un editor che accetta l'update
 const TicketEditor = ({ ticket, ticketState, setTicketState }) => {
@@ -20,11 +20,12 @@ const TicketEditor = ({ ticket, ticketState, setTicketState }) => {
     title: yup.string().required()
   })
 
-  // useEffect(() => {
-  //   if (ticket && ticketState === 'edit') {
-  //     setOpenTicketEditor(true)
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (ticket && ticketState === 'edit') {
+      setOpenTicketEditor(true)
+    }
+    return () => setOpenTicketEditor(false)
+  }, [])
 
   const { register, handleSubmit, reset, formState: { resetField, isSubmitting, errors } } = useForm({
     resolver: yupResolver(schema),

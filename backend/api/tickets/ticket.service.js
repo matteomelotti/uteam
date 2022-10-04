@@ -1,35 +1,39 @@
-import Ticket from './ticket.model.js'
-import BaseService from '../../services/base.service.js'
+import BaseService from '../../services/base.service.js';
+import Ticket from './ticket.model.js';
 
 class TicketService extends BaseService {
-  getModel () {
-    return Ticket
+  getModel() {
+    return Ticket;
   }
 
-  async create (data) {
-    const ticket = new Ticket(data)
-    await ticket.save()
-    return ticket
+  async create(data) {
+    const ticket = new Ticket(data);
+    await ticket.save();
+    return ticket;
   }
 
-  async update (ticketId, data) {
-    const ticket = await this.byId(ticketId, {})
-    await ticket.update({ title: data.title })
+  async update(ticketId, data) {
+    const ticket = Ticket.findOneAndUpdate(
+      { _id: ticketId },
+      { title: data.title }
+    );
 
-    return ticket
+    return ticket;
   }
 
-  async complete (ticketId) {
-    const ticket = await this.byId(ticketId, {})
-    await ticket.update({ completed: true })
+  async complete(ticketId) {
+    const ticket = Ticket.findOneAndUpdate(
+      { _id: ticketId },
+      { completed: true }
+    );
 
-    return ticket
+    return ticket;
   }
 
-  async delete (id) {
-    const ticket = await this.byId(id, {})
-    await ticket.delete()
+  async delete(id) {
+    const ticket = await this.byId(id, {});
+    await ticket.delete();
   }
 }
 
-export default new TicketService()
+export default new TicketService();

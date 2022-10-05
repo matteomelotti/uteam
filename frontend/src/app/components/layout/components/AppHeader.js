@@ -1,23 +1,19 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { cilMenu } from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
 import {
   CContainer,
   CHeader,
   CHeaderBrand,
   CHeaderDivider,
   CHeaderNav,
-  CHeaderToggler,
-  CNavLink,
-  CNavItem
+  CHeaderToggler
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
 
-import { AppBreadcrumb } from './index'
-import { AppHeaderDropdown } from './header/index'
-import { sidebarShow as _sidebarShow } from '../../../../state'
 import { useRecoilState } from 'recoil'
 import logoPng from '../../../../assets/icons/logo-blue.png'
+import { sidebarShow as _sidebarShow } from '../../../../state'
+import { AppHeaderDropdown } from './header/index'
+import { AppBreadcrumb } from './index'
 
 const AppHeader = () => {
   const [sidebarShow, setSidebarShow] = useRecoilState(_sidebarShow)
@@ -36,21 +32,21 @@ const AppHeader = () => {
         </CHeaderBrand>
         <CHeaderNav className='d-none d-md-flex me-auto' />
         <CHeaderNav>
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink href='#'>
               <CIcon icon={cilBell} size='lg' />
             </CNavLink>
-          </CNavItem>
-          <CNavItem>
+          </CNavItem> */}
+          {/* <CNavItem>
             <CNavLink href='#'>
               <CIcon icon={cilList} size='lg' />
             </CNavLink>
-          </CNavItem>
-          <CNavItem>
+          </CNavItem> */}
+          {/* <CNavItem>
             <CNavLink href='#'>
               <CIcon icon={cilEnvelopeOpen} size='lg' />
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav className='ms-3'>
           <AppHeaderDropdown />
